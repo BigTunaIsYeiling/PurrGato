@@ -3,8 +3,9 @@ import Logo from "@/app/logo.png";
 import styled from "@emotion/styled";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 export default function Home() {
+  const router = useRouter();
   const GlassButton = styled(Button)({
     background: "rgba(255, 255, 255, 0.2)",
     backdropFilter: "blur(10px)",
@@ -54,8 +55,20 @@ export default function Home() {
         Where every question has nine lives!
       </Typography>
       <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-        <GlassButton>Already have an account?</GlassButton>
-        <GlassButton>New here? Sign up!</GlassButton>
+        <GlassButton
+          onClick={() => {
+            router.push("/login");
+          }}
+        >
+          Already have an account?
+        </GlassButton>
+        <GlassButton
+          onClick={() => {
+            router.push("/signup");
+          }}
+        >
+          New here? Sign up!
+        </GlassButton>
       </Stack>
       <Typography variant="body2" mt={4} sx={{ fontSize: { xs: 12, md: 14 } }}>
         Developed with dedication by{" "}
