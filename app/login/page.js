@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { Button, Box, Typography, Container, IconButton } from "@mui/material";
+import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import styled from "@emotion/styled";
-import Link from "next/link";
 
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.2)",
@@ -101,7 +101,7 @@ const Login = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: 'relative' }}>
           <GlassInput
             type={showPassword ? "text" : "password"}
             placeholder="Password"
@@ -110,22 +110,12 @@ const Login = () => {
           />
           <IconButton
             onClick={togglePasswordVisibility}
-            sx={{
-              position: "absolute",
-              right: "12px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              color: "black",
-            }}
+            sx={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: 'black' }}
           >
             {showPassword ? <BsEyeSlash /> : <BsEye />}
           </IconButton>
         </Box>
-        <GlassButton
-          fullWidth
-          onClick={handleLogin}
-          sx={{ mt: { xs: 2, md: 3 } }}
-        >
+        <GlassButton fullWidth onClick={handleLogin} sx={{ mt: { xs: 2, md: 3 } }}>
           Log In
         </GlassButton>
         <Typography variant="body2" mt={{ xs: 2, md: 3 }} mb={{ xs: 1, md: 2 }}>
@@ -148,14 +138,10 @@ const Login = () => {
         </GlassButton>
       </Box>
       <Typography variant="body2" mt={{ xs: 3, md: 4 }}>
-        Don't have an account?{" "}
-        <Box
-          sx={{ textDecoration: "none", color: "#FD6888" }}
-          component={Link}
-          href="/signup"
-        >
-          Sign up
-        </Box>
+        Don&apos;t have an account?{" "}
+        <Link href="/signup" passHref>
+          <a style={{ textDecoration: 'none', color: '#1DA1F2' }}>Sign up</a>
+        </Link>
       </Typography>
     </Container>
   );
