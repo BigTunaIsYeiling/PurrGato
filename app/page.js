@@ -26,7 +26,7 @@ export default function Home() {
       height="100vh"
       alignItems="center"
       justifyContent="center"
-      spacing={4}
+      spacing={{ xs: 2.7, md: 3.5 }}
       sx={{ textAlign: "center" }}
     >
       <Box
