@@ -42,12 +42,14 @@ export default function Home() {
       <Typography variant="h4" fontWeight={400} fontSize={{ xs: 20, md: 30 }}>
         Where every question has nine lives!
       </Typography>
-      <Stack direction="row" spacing={2}>
+      <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
         <GlassButton>Already have an account?</GlassButton>
         <GlassButton>New here? Sign up!</GlassButton>
       </Stack>
       <Typography variant="body2" mt={4}>
-        Built with passion by <span style={{ color: "#F87185", fontWeight: "500" }}>Big T</span> &copy; {new Date().getFullYear()}
+        Built with passion by{" "}
+        <span style={{ color: "#F87185", fontWeight: "500" }}>Big T</span>{" "}
+        &copy; {new Date().getFullYear()}
       </Typography>
     </Stack>
   );
