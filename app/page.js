@@ -59,7 +59,7 @@ export default function Home() {
       </Stack>
       <Typography variant="body2" mt={4} sx={{ fontSize: { xs: 12, md: 14 } }}>
         Developed with dedication by{" "}
-        <span style={{ color: "#FD6888", fontWeight: "500" }}>Big T</span>{" "}
+        <span style={{ color: "#FD6888", fontWeight: "500" }}>Ahmed Anany</span>{" "}
         &copy; {new Date().getFullYear()}
       </Typography>
     </Stack>
