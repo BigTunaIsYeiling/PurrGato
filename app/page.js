@@ -1,95 +1,54 @@
+"use client";
+import Logo from "@/app/logo.png";
+import styled from "@emotion/styled";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import styles from "./page.module.css";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const GlassButton = styled(Button)({
+    background: "rgba(255, 255, 255, 0.2)",
+    backdropFilter: "blur(10px)",
+    border: "1px solid rgba(255, 255, 255, 0.3)",
+    borderRadius: "10px",
+    color: "black",
+    padding: "10px 20px",
+    textTransform: "none",
+    fontSize: "16px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    "&:hover": {
+      background: "rgba(255, 255, 255, 0.3)",
+      border: "1px solid rgba(255, 255, 255, 0.4)",
+    },
+  });
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  return (
+    <Stack
+      height="100vh"
+      alignItems="center"
+      justifyContent="center"
+      spacing={4}
+      sx={{ textAlign: "center" }}
+    >
+      <Box
+        component={Image}
+        src={Logo}
+        alt="PurrGatto Logo"
+        width={{ xs: 150, md: 250 }}
+        height={{ xs: 150, md: 250 }}
+      />
+      <Typography variant="h1" fontWeight={900} fontSize={{ xs: 40, md: 50 }}>
+        PurrGatto
+      </Typography>
+      <Typography variant="h4" fontWeight={400} fontSize={{ xs: 20, md: 30 }}>
+        Where every question has nine lives!
+      </Typography>
+      <Stack direction="row" spacing={2}>
+        <GlassButton>Already have an account?</GlassButton>
+        <GlassButton>New here? Sign up!</GlassButton>
+      </Stack>
+      <Typography variant="body2" mt={4}>
+        Built with passion by <span style={{ color: "#F87185", fontWeight: "500" }}>Big T</span> &copy; {new Date().getFullYear()}
+      </Typography>
+    </Stack>
   );
 }
