@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import styled from "@emotion/styled";
+import { useRouter } from "next/navigation";
 
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.2)",
@@ -63,9 +64,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const router = useRouter();
   const handleLogin = () => {
-    // Handle email/password login logic here
+    // Handle login logic here
+    router.push("/user");
   };
 
   const handleTwitterLogin = () => {
@@ -150,7 +152,7 @@ const Login = () => {
       <Typography variant="body2" mt={{ xs: 3, md: 4 }}>
         Don&apos;t have an account?{" "}
         <Box
-          sx={{ textDecoration: "none", color: "#FD6888" }}
+          sx={{ textDecoration: "none", color: "#FFBA6D" }}
           component={Link}
           href="/signup"
         >

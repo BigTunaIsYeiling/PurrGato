@@ -149,7 +149,7 @@ const Signup = () => {
       <Typography variant="body2" mt={{ xs: 3, md: 4 }}>
         Already have an account?{" "}
         <Box
-          sx={{ textDecoration: "none", color: "#FD6888" }}
+          sx={{ textDecoration: "none", color: "#FFBA6D" }}
           component={Link}
           href="/login"
         >
