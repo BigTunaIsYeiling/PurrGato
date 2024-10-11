@@ -153,7 +153,7 @@ const Signup = () => {
           component={Link}
           href="/login"
         >
-          Log in
+          Log In
         </Box>
       </Typography>
     </Container>
