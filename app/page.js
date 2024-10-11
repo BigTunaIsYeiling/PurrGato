@@ -58,8 +58,8 @@ export default function Home() {
         <GlassButton>New here? Sign up!</GlassButton>
       </Stack>
       <Typography variant="body2" mt={4} sx={{ fontSize: { xs: 12, md: 14 } }}>
-        Built with passion by{" "}
-        <span style={{ color: "#F87185", fontWeight: "bold" }}>Big T</span>{" "}
+        Developed with dedication by{" "}
+        <span style={{ color: "#FD6888", fontWeight: "500" }}>Big T</span>{" "}
         &copy; {new Date().getFullYear()}
       </Typography>
     </Stack>
