@@ -26,29 +26,40 @@ export default function Home() {
       height="100vh"
       alignItems="center"
       justifyContent="center"
-      spacing={{ xs: 2.7, md: 3.5 }}
-      sx={{ textAlign: "center" }}
+      spacing={{ xs: 2, md: 3 }}
+      sx={{ textAlign: "center", padding: { xs: 2, md: 4 } }}
     >
       <Box
         component={Image}
         src={Logo}
         alt="PurrGatto Logo"
-        width={{ xs: 150, md: 250 }}
-        height={{ xs: 150, md: 250 }}
+        width={{ xs: 120, md: 250 }}
+        height={{ xs: 120, md: 250 }}
+        sx={{ mb: { xs: 2, md: 4 } }}
       />
-      <Typography variant="h1" fontWeight={900} fontSize={{ xs: 40, md: 50 }}>
+      <Typography
+        variant="h2"
+        fontWeight={900}
+        fontSize={{ xs: 35, md: 50 }}
+        sx={{ mb: { xs: 1, md: 2 } }}
+      >
         PurrGatto
       </Typography>
-      <Typography variant="h4" fontWeight={400} fontSize={{ xs: 20, md: 30 }}>
+      <Typography
+        variant="h5"
+        fontWeight={400}
+        fontSize={{ xs: 18, md: 30 }}
+        sx={{ mb: { xs: 2, md: 3 } }}
+      >
         Where every question has nine lives!
       </Typography>
       <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
         <GlassButton>Already have an account?</GlassButton>
         <GlassButton>New here? Sign up!</GlassButton>
       </Stack>
-      <Typography variant="body2" mt={4}>
+      <Typography variant="body2" mt={4} sx={{ fontSize: { xs: 12, md: 14 } }}>
         Built with passion by{" "}
-        <span style={{ color: "#F87185", fontWeight: "500" }}>Big T</span>{" "}
+        <span style={{ color: "#F87185", fontWeight: "bold" }}>Big T</span>{" "}
         &copy; {new Date().getFullYear()}
       </Typography>
     </Stack>
