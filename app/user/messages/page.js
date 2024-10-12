@@ -1,14 +1,16 @@
-"use client";
-import React from "react";
-import { Box, Typography } from "@mui/material";
-
-const Messages = () => {
+import MessageList from "@/components/Messages/MessagesList";
+import { Box, Typography, Container } from "@mui/material";
+const MessagesPage = () => {
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h4">Messages</Typography>
-      <Typography variant="body1">This is where your messages will be displayed.</Typography>
-    </Box>
+    <Container>
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h4" sx={{ mb: 2, color: "#333", fontWeight: 600 }}>
+          Inbox
+        </Typography>
+        <MessageList />
+      </Box>
+    </Container>
   );
 };
 
-export default Messages;
+export default MessagesPage;

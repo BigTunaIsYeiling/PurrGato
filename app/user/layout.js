@@ -1,15 +1,34 @@
 "use client";
-import React from "react";
-import { AppBar, Toolbar, Box, IconButton } from "@mui/material";
+import React, { useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+  Divider,
+  Stack,
+} from "@mui/material";
 import { VscAccount, VscBell, VscHome, VscMail } from "react-icons/vsc";
+import { FaUserCircle } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/app/logo.png"; // Adjust this path if necessary
-
+import { CiSettings } from "react-icons/ci";
 const UserLayout = ({ children }) => {
   const pathname = usePathname();
-  const userid = "123"; // Replace with dynamic user ID
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
@@ -49,10 +68,15 @@ const UserLayout = ({ children }) => {
                 <VscHome size={24} />
               </IconButton>
             </Link>
-            <Link href={`/user/${userid}`} passHref>
+            <Link href={`/user/1`} passHref>
               <IconButton
                 sx={{
-                  color: pathname === `/user/${userid}` ? "#FFBA6D" : "#777",
+                  color:
+                    pathname == `/user` ||
+                    pathname == "/user/messages" ||
+                    pathname == "/user/notifications"
+                      ? "#777"
+                      : "#FFBA6D",
                   transition: "color 0.3s",
                 }}
               >
@@ -81,6 +105,77 @@ const UserLayout = ({ children }) => {
               </IconButton>
             </Link>
           </Box>
+          <IconButton
+            onClick={handleMenuClick}
+            sx={{
+              color: "#777",
+              transition: "color 0.3s",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Box shadow added
+              "&:hover": {
+                color: "#FCE3CD", // Optional: Change color on hover
+              },
+            }}
+          >
+            <Stack
+              sx={{
+                width: "30px",
+                height: "30px",
+                borderRadius: "50%",
+              }}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Typography variant="body3" color="black">
+                A
+              </Typography>
+            </Stack>
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            PaperProps={{
+              sx: {
+                backgroundColor: "rgba(255, 255, 255, 0.25)", // Semi-transparent background
+                backdropFilter: "blur(10px)", // Frosted glass effect
+                borderRadius: 2,
+                border: "1px solid rgba(255, 255, 255, 0.18)",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)", // Glass-like shadow
+                p: 1,
+                width: 250, // Adjust width to match
+              },
+            }}
+          >
+            {/* Profile Information */}
+            <MenuItem>
+              <Box
+                sx={{
+                  backdropFilter: "blur(10px)",
+                  borderRadius: 1,
+                }}
+              >
+                <Stack
+                  direction={"row"}
+                  alignItems={"center"}
+                  justifyContent={"space-between"}
+                >
+                  <Typography variant="body1" fontWeight="600">
+                    Ahmed
+                  </Typography>
+                  <CiSettings size={20} />
+                </Stack>
+                <Typography variant="body2">
+                  ahmedenany9812@gmail.com
+                </Typography>
+              </Box>
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleMenuClose}>
+              <Typography variant="body2" color="error">
+                Sign out
+              </Typography>
+            </MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
       <Box sx={{ flexGrow: 1, padding: 2 }}>{children}</Box>

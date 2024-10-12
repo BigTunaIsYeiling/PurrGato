@@ -1,14 +1,17 @@
-"use client";
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import NotificationList from "@/components/Notifications/NotificationList";
+import { Box, Typography, Container } from "@mui/material";
 
-const Notifications = () => {
+const NotificationsPage = () => {
   return (
-    <Box sx={{ padding: 2 }}>
-      <Typography variant="h4">Notifications</Typography>
-      <Typography variant="body1">This is where your notifications will be displayed.</Typography>
-    </Box>
+    <Container>
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h4" sx={{ mb: 2, color: "#333", fontWeight: 600 }}>
+          Notifications
+        </Typography>
+        <NotificationList />
+      </Box>
+    </Container>
   );
 };
 
-export default Notifications;
+export default NotificationsPage;
