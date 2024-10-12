@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/app/logo.png"; // Adjust this path if necessary
 import UserDialog from "@/components/ChangeUserSettings";
+
 const UserLayout = ({ children }) => {
   const pathname = usePathname();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -30,7 +31,14 @@ const UserLayout = ({ children }) => {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden", // Prevents extra scroll
+      }}
+    >
       <AppBar
         position="static"
         sx={{
@@ -163,7 +171,16 @@ const UserLayout = ({ children }) => {
           </Menu>
         </Toolbar>
       </AppBar>
-      <Box sx={{ flexGrow: 1, padding: 2 }}>{children}</Box>
+      <Box
+        sx={{
+          flexGrow: 1,
+          padding: 2,
+          overflowY: "auto", // Ensure scrolling if content overflows
+          WebkitOverflowScrolling: "touch", // For smooth scrolling on iOS devices
+        }}
+      >
+        {children}
+      </Box>
     </Box>
   );
 };
