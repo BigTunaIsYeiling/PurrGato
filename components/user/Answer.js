@@ -13,11 +13,9 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
 import { BsReplyAll } from "react-icons/bs";
 import { useState } from "react";
-
 export const Answer = ({ answer, setAnswers }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [liked, setLiked] = useState(false);
-
   // Handle like toggle
   const handleLikeToggle = async () => {
     setLiked(!liked);
@@ -29,17 +27,14 @@ export const Answer = ({ answer, setAnswers }) => {
       );
     });
   };
-
   // Open delete menu
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   // Close delete menu
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
   // Handle delete action
   const handleDelete = () => {
     setAnswers((prevAnswers) =>

@@ -37,7 +37,11 @@ const Answers = () => {
             <Answer key={index} answer={answer} setAnswers={setAnswersData} />
           ))
         ) : (
-          <Typography variant="body1" sx={{ mt: 4, color: "#666" }} textAlign={"center"}>
+          <Typography
+            variant="body1"
+            sx={{ mt: 4, color: "#666" }}
+            textAlign={"center"}
+          >
             No answers available.
           </Typography>
         )}

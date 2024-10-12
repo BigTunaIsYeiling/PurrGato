@@ -10,8 +10,6 @@ import {
   Divider,
 } from "@mui/material";
 import { AiOutlineDelete } from "react-icons/ai";
-import { FaReply, FaTrashAlt } from "react-icons/fa";
-
 const GlassButton = styled(Button)({
   background: "white",
   backdropFilter: "blur(10px)",

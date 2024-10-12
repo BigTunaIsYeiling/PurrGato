@@ -12,12 +12,12 @@ import {
   Stack,
 } from "@mui/material";
 import { VscAccount, VscBell, VscHome, VscMail } from "react-icons/vsc";
-import { FaUserCircle } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/app/logo.png"; // Adjust this path if necessary
 import { CiSettings } from "react-icons/ci";
+import UserDialog from "@/components/ChangeUserSettings";
 const UserLayout = ({ children }) => {
   const pathname = usePathname();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -147,28 +147,7 @@ const UserLayout = ({ children }) => {
             }}
           >
             {/* Profile Information */}
-            <MenuItem>
-              <Box
-                sx={{
-                  backdropFilter: "blur(10px)",
-                  borderRadius: 1,
-                }}
-              >
-                <Stack
-                  direction={"row"}
-                  alignItems={"center"}
-                  justifyContent={"space-between"}
-                >
-                  <Typography variant="body1" fontWeight="600">
-                    Ahmed
-                  </Typography>
-                  <CiSettings size={20} />
-                </Stack>
-                <Typography variant="body2">
-                  ahmedenany9812@gmail.com
-                </Typography>
-              </Box>
-            </MenuItem>
+            <UserDialog />
             <Divider />
             <MenuItem onClick={handleMenuClose}>
               <Typography variant="body2" color="error">
