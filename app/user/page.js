@@ -120,7 +120,7 @@ const Home = () => {
           }}
           sx={{ width: {
             xs: "100%",
-            sm: "auto",
+            sm: 400,
           } }}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -131,7 +131,7 @@ const Home = () => {
           maxWidth: 600,
           maxHeight: {
             xs: "30vh",
-            sm: "70vh",
+            sm: "56vh",
           },
           overflowY: "auto",
           "&::-webkit-scrollbar": { width: "8px" },
