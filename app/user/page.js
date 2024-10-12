@@ -91,7 +91,7 @@ const Home = () => {
         mt: 4,
       }}
     >
-      <Typography variant="h4" sx={{ mb: 3 }}>
+      <Typography variant="h4" sx={{ mb: 3,textAlign:"center" }}>
         Welcome to PurrGatto!
       </Typography>
       <Box sx={{ mb: 3, display: "flex", alignItems: "center", gap: 2 }}>
@@ -118,7 +118,10 @@ const Home = () => {
               },
             },
           }}
-          sx={{ width: 400 }}
+          sx={{ width: {
+            xs: "100%",
+            sm: "auto",
+          } }}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </Box>
@@ -126,7 +129,10 @@ const Home = () => {
         sx={{
           width: "100%",
           maxWidth: 600,
-          maxHeight: 400,
+          maxHeight: {
+            xs: "30vh",
+            sm: "70vh",
+          },
           overflowY: "auto",
           "&::-webkit-scrollbar": { width: "8px" },
           "&::-webkit-scrollbar-track": { backgroundColor: "#f6eee6" },
