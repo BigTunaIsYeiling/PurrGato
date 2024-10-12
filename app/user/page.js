@@ -131,7 +131,7 @@ const Home = () => {
           maxWidth: 600,
           maxHeight: {
             xs: "30vh",
-            sm: "56vh",
+            sm: "52vh",
           },
           overflowY: "auto",
           "&::-webkit-scrollbar": { width: "8px" },

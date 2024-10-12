@@ -16,7 +16,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/app/logo.png"; // Adjust this path if necessary
-import { CiSettings } from "react-icons/ci";
 import UserDialog from "@/components/ChangeUserSettings";
 const UserLayout = ({ children }) => {
   const pathname = usePathname();
@@ -48,13 +47,19 @@ const UserLayout = ({ children }) => {
             backdropFilter: "blur(10px)",
             borderRadius: "50px",
             padding: 2,
-            width: { xs: "90%", sm: "60%" },
-            justifyContent: "space-between",
+            width: { xs: "96%", sm: "60%" },
+            justifyContent: { xs: "center", sm: "space-between" },
             boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
             border: "1px solid rgba(255, 255, 255, 0.3)",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          <Box
+            sx={{
+              display: { xs: "none", sm: "flex" },
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
             <Image src={Logo} alt="PurrGatto Logo" width={40} height={40} />
           </Box>
           <Box sx={{ display: "flex", gap: 3 }}>
@@ -114,6 +119,7 @@ const UserLayout = ({ children }) => {
               "&:hover": {
                 color: "#FCE3CD", // Optional: Change color on hover
               },
+              ml: { xs: 3, sm: 0 },
             }}
           >
             <Stack
