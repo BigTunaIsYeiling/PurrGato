@@ -49,7 +49,7 @@ export default function UserDialog() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <MenuItem onClick={handleClickOpen}>
         <Box
           sx={{
@@ -209,6 +209,6 @@ export default function UserDialog() {
           </GlassButton>
         </Box>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }

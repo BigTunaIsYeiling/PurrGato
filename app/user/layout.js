@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import {
   AppBar,
-  Toolbar,
   Box,
   IconButton,
   Menu,
@@ -17,7 +16,6 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/app/logo.png"; // Adjust this path if necessary
 import UserDialog from "@/components/ChangeUserSettings";
-
 const UserLayout = ({ children }) => {
   const pathname = usePathname();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -38,10 +36,34 @@ const UserLayout = ({ children }) => {
         flexDirection: "column",
       }}
     >
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        slotProps={{
+          paper: {
+            sx: {
+              backgroundColor: "rgba(255, 255, 255, 0.25)",
+              backdropFilter: "blur(10px)",
+              borderRadius: 2,
+              border: "1px solid rgba(255, 255, 255, 0.18)",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+              p: 1,
+            },
+          },
+        }}
+      >
+        <UserDialog />
+        <Divider />
+        <MenuItem onClick={handleMenuClose}>
+          <Typography variant="body2" color="error">
+            Sign out
+          </Typography>
+        </MenuItem>
+      </Menu>
       <AppBar
-        position="fixed"
+        position="sticky"
         sx={{
-          top: 0,
           backgroundColor: "rgba(255, 255, 255, 0.1)",
           boxShadow: "none",
           display: "flex",
@@ -51,11 +73,10 @@ const UserLayout = ({ children }) => {
           borderRadius: "50px",
           padding: 2,
           width: { xs: "96%", sm: "60%" },
-          maxWidth: "1200px", // Set a maximum width to prevent resizing
           boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
           border: "1px solid rgba(255, 255, 255, 0.3)",
-          left: "50%",
-          transform: "translateX(-50%)", // Center it horizontally
+          alignSelf: "center",
+          top: 16,
         }}
       >
         <Box
@@ -160,8 +181,8 @@ const UserLayout = ({ children }) => {
               display: { xs: "flex", sm: "none" },
               alignItems: "center",
               gap: 3,
-              justifyContent: "space-between",
-              width: "100%",
+              width:"100%",
+              justifyContent:"space-between"
             }}
           >
             <Link href="/user" passHref>
@@ -210,66 +231,40 @@ const UserLayout = ({ children }) => {
                 <VscBell size={24} />
               </IconButton>
             </Link>
-            <IconButton
-              onClick={handleMenuClick}
-              sx={{
-                color: "#777",
-                transition: "color 0.3s",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                "&:hover": {
-                  color: "#FCE3CD",
-                },
-              }}
-            >
-              <Stack
-                sx={{
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "50%",
-                }}
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Typography variant="body3" color="black">
-                  A
-                </Typography>
-              </Stack>
-            </IconButton>
-          </Box>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-            PaperProps={{
-              sx: {
-                backgroundColor: "rgba(255, 255, 255, 0.25)",
-                backdropFilter: "blur(10px)",
-                borderRadius: 2,
-                border: "1px solid rgba(255, 255, 255, 0.18)",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
-                p: 1,
-                width: 250,
+          <IconButton
+            onClick={handleMenuClick}
+            sx={{
+              color: "#777",
+              transition: "color 0.3s",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+              "&:hover": {
+                color: "#FCE3CD",
               },
             }}
           >
-            <UserDialog />
-            <Divider />
-            <MenuItem onClick={handleMenuClose}>
-              <Typography variant="body2" color="error">
-                Sign out
+            <Stack
+              sx={{
+                width: "30px",
+                height: "30px",
+                borderRadius: "50%",
+              }}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Typography variant="body3" color="black">
+                A
               </Typography>
-            </MenuItem>
-          </Menu>
+            </Stack>
+          </IconButton>
+          </Box>
         </Box>
       </AppBar>
       {/* Added padding-top equal to AppBar height to prevent content overlap */}
       <Box
         sx={{
           flexGrow: 1,
-          padding: 2,
-          paddingTop: "80px", // Adjust this height to match the AppBar height + margin
+          padding: 2, // Adjust this height to match the AppBar height + margin
           overflowY: "auto",
-          WebkitOverflowScrolling: "touch",
         }}
       >
         {children}
