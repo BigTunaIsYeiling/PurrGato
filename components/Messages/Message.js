@@ -21,7 +21,8 @@ const GlassButton = styled(Button)({
   fontSize: "14px",
   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
 });
-
+import anon from "@/app/anon.png";
+import Image from "next/image";
 const Message = ({ message }) => {
   return (
     <Paper
@@ -37,11 +38,9 @@ const Message = ({ message }) => {
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-        <Avatar
-          src="https://i.pravatar.cc/150?img=anonymous" // Placeholder for anon photo
-          alt="Anonymous"
-          sx={{ width: 40, height: 40, mr: 2 }}
-        />
+        <Avatar sx={{ width: 40, height: 40, mr: 2 }}>
+          <Image src={anon} alt="Anonymous" width={40} height={40} />
+        </Avatar>
         <Box>
           <Typography variant="body2" sx={{ fontWeight: 600, color: "#333" }}>
             Anonymous
