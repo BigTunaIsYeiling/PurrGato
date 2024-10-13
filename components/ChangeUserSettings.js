@@ -74,14 +74,15 @@ export default function UserDialog() {
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
-        fullScreen={{ xs: true, sm: false }}
+        // fullScreen={{ xs: true, sm: false }}
         PaperProps={{
           sx: {
             background: "linear-gradient(180deg, #f8f4f0, #fdecd2)", // Gradient background
-            borderRadius: { xs: 0, sm: "10px" },
-            padding: "20px",
+            borderRadius: { xs: "10px", sm: "10px" },
+            padding: "10px",
             height: { xs: "100%", sm: "auto" }, // Full height on small screens, auto on larger
             width: { xs: "100%", sm: "auto" }, // Full width on small screens, 600px on larger
+            overflowX: "hidden",
           },
         }}
       >
@@ -105,7 +106,7 @@ export default function UserDialog() {
             <AiOutlineClose />
           </IconButton>
         </Box>
-        <Box sx={{ p: 4 }}>
+        <Box sx={{ p: 3 }}>
           <Box
             sx={{
               display: "flex",
@@ -148,7 +149,7 @@ export default function UserDialog() {
                 sx: {
                   borderRadius: "25px",
                   backgroundColor: "white",
-                  padding: "5px 10px",
+                  padding: "2px",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                   backdropFilter: "blur(10px)",
                   "& .MuiOutlinedInput-notchedOutline": {
@@ -167,7 +168,7 @@ export default function UserDialog() {
                 sx: {
                   borderRadius: "25px",
                   backgroundColor: "white",
-                  padding: "5px 10px",
+                  padding: "2px",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                   backdropFilter: "blur(10px)",
                   "& .MuiOutlinedInput-notchedOutline": {
@@ -187,7 +188,7 @@ export default function UserDialog() {
                 sx: {
                   borderRadius: "25px",
                   backgroundColor: "white",
-                  padding: "5px 10px",
+                  padding: "2px",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                   backdropFilter: "blur(10px)",
                   "& .MuiOutlinedInput-notchedOutline": {
