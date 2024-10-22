@@ -19,6 +19,7 @@ const GlassButton = styled(Button)({
     background: "rgba(255, 255, 255, 0.3)",
     border: "1px solid rgba(255, 255, 255, 0.4)",
   },
+  fontFamily: "__Roboto_b0d14b",
 });
 
 const GlassInput = styled("input")({
