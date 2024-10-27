@@ -17,11 +17,6 @@ import { CiSettings } from "react-icons/ci";
 import { AiOutlineClose } from "react-icons/ai";
 import { styled } from "@mui/system";
 import { TbCameraMinus } from "react-icons/tb";
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
@@ -73,7 +68,6 @@ export default function UserDialog() {
       <Dialog
         open={open}
         onClose={handleClose}
-        TransitionComponent={Transition}
         // fullScreen={{ xs: true, sm: false }}
         PaperProps={{
           sx: {

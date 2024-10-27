@@ -9,16 +9,18 @@ const UserLayout = ({ children }) => {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
+        position: "relative",
       }}
     >
-      {/* <NavBar /> */}
-      <GuestNavBar />
-      {/* Added padding-top equal to AppBar height to prevent content overlap */}
+      <NavBar />
       <Box
         sx={{
           flexGrow: 1,
-          padding: 2, // Adjust this height to match the AppBar height + margin
+          padding: 2,
           overflowY: "auto",
+          zIndex: 1,
+          marginTop: "-100px", // Ensure this matches or slightly exceeds your NavBar height
+          paddingTop: "100px", // Adjust padding to ensure content is not hidden behind the header
         }}
       >
         {children}
@@ -26,5 +28,4 @@ const UserLayout = ({ children }) => {
     </Box>
   );
 };
-
 export default UserLayout;

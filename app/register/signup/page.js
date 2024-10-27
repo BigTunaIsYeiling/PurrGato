@@ -1,12 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { Button, Box, Typography, Container, IconButton } from "@mui/material";
-import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import styled from "@emotion/styled";
-import { useRouter } from "next/navigation";
-
+import Link from "next/link";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.2)",
   backdropFilter: "blur(10px)",
@@ -21,7 +19,6 @@ const GlassButton = styled(Button)({
     background: "rgba(255, 255, 255, 0.3)",
     border: "1px solid rgba(255, 255, 255, 0.4)",
   },
-  fontFamily:"__Roboto_b0d14b"
 });
 
 const GlassInput = styled("input")({
@@ -61,18 +58,17 @@ const GlassInput = styled("input")({
   },
 });
 
-const Login = () => {
+const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
-  const handleLogin = () => {
-    // Handle login logic here
-    router.push("/user");
+
+  const handleSignup = () => {
+    // Handle email/password signup logic here
   };
 
-  const handleTwitterLogin = () => {
-    // Handle Twitter login logic here
+  const handleTwitterSignup = () => {
+    // Handle Twitter signup logic here
   };
 
   const togglePasswordVisibility = () => {
@@ -92,10 +88,10 @@ const Login = () => {
       }}
     >
       <Typography variant="h4" fontWeight="bold" mb={{ xs: 3, md: 4 }}>
-        Welcome Back to PurrGatto!
+        Welcome to PurrGatto!
       </Typography>
       <Typography variant="h6" mb={{ xs: 2, md: 4 }}>
-        Log in to continue your journey.
+        Create your account and join the community.
       </Typography>
       <Box component="form" noValidate autoComplete="off">
         <GlassInput
@@ -126,17 +122,17 @@ const Login = () => {
         </Box>
         <GlassButton
           fullWidth
-          onClick={handleLogin}
+          onClick={handleSignup}
           sx={{ mt: { xs: 2, md: 3 } }}
         >
-          Log In
+          Sign Up
         </GlassButton>
         <Typography variant="body2" mt={{ xs: 2, md: 3 }} mb={{ xs: 1, md: 2 }}>
           or
         </Typography>
         <GlassButton
           fullWidth
-          onClick={handleTwitterLogin}
+          onClick={handleTwitterSignup}
           sx={{
             mt: { xs: 2, md: 3 },
             background: "#1DA1F2",
@@ -147,21 +143,21 @@ const Login = () => {
           }}
           startIcon={<FaXTwitter />}
         >
-          Log In with Twitter
+          Sign Up with Twitter
         </GlassButton>
       </Box>
       <Typography variant="body2" mt={{ xs: 3, md: 4 }}>
-        Don&apos;t have an account?{" "}
+        Already have an account?{" "}
         <Box
           sx={{ textDecoration: "none", color: "#FFBA6D" }}
           component={Link}
-          href="/signup"
+          href="/register"
         >
-          Sign Up
+          Log In
         </Box>
       </Typography>
     </Container>
   );
 };
 
-export default Login;
+export default Signup;

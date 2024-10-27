@@ -71,6 +71,7 @@ export default function NavBar() {
           border: "1px solid rgba(255, 255, 255, 0.3)",
           alignSelf: "center",
           top: 16,
+          zIndex: 10,
         }}
       >
         <Box
@@ -78,7 +79,7 @@ export default function NavBar() {
             width: "100%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between", // Ensures proper alignment
+            justifyContent: "space-between",
           }}
         >
           <Box
@@ -97,23 +98,23 @@ export default function NavBar() {
               gap: 3,
             }}
           >
-            <Link href="/user" passHref>
+            <Link href="/" passHref>
               <IconButton
                 sx={{
-                  color: pathname === "/user" ? "#FFBA6D" : "#777",
+                  color: pathname === "/" ? "#FFBA6D" : "#777",
                   transition: "color 0.3s",
                 }}
               >
                 <VscHome size={24} />
               </IconButton>
             </Link>
-            <Link href={`/user/1`} passHref>
+            <Link href={`/1`} passHref>
               <IconButton
                 sx={{
                   color:
-                    pathname == `/user` ||
-                    pathname == "/user/messages" ||
-                    pathname == "/user/notifications"
+                    pathname == `/` ||
+                    pathname == "/messages" ||
+                    pathname == "/notifications"
                       ? "#777"
                       : "#FFBA6D",
                   transition: "color 0.3s",
@@ -122,21 +123,20 @@ export default function NavBar() {
                 <VscAccount size={24} />
               </IconButton>
             </Link>
-            <Link href="/user/messages" passHref>
+            <Link href="/messages" passHref>
               <IconButton
                 sx={{
-                  color: pathname === "/user/messages" ? "#FFBA6D" : "#777",
+                  color: pathname === "/messages" ? "#FFBA6D" : "#777",
                   transition: "color 0.3s",
                 }}
               >
                 <VscMail size={24} />
               </IconButton>
             </Link>
-            <Link href="/user/notifications" passHref>
+            <Link href="/notifications" passHref>
               <IconButton
                 sx={{
-                  color:
-                    pathname === "/user/notifications" ? "#FFBA6D" : "#777",
+                  color: pathname === "/notifications" ? "#FFBA6D" : "#777",
                   transition: "color 0.3s",
                 }}
               >
@@ -179,23 +179,23 @@ export default function NavBar() {
               justifyContent: "space-between",
             }}
           >
-            <Link href="/user" passHref>
+            <Link href="/" passHref>
               <IconButton
                 sx={{
-                  color: pathname === "/user" ? "#FFBA6D" : "#777",
+                  color: pathname === "/" ? "#FFBA6D" : "#777",
                   transition: "color 0.3s",
                 }}
               >
                 <VscHome size={24} />
               </IconButton>
             </Link>
-            <Link href={`/user/1`} passHref>
+            <Link href={`/1`} passHref>
               <IconButton
                 sx={{
                   color:
-                    pathname == `/user` ||
-                    pathname == "/user/messages" ||
-                    pathname == "/user/notifications"
+                    pathname == `/` ||
+                    pathname == "/messages" ||
+                    pathname == "/notifications"
                       ? "#777"
                       : "#FFBA6D",
                   transition: "color 0.3s",
@@ -204,21 +204,20 @@ export default function NavBar() {
                 <VscAccount size={24} />
               </IconButton>
             </Link>
-            <Link href="/user/messages" passHref>
+            <Link href="/messages" passHref>
               <IconButton
                 sx={{
-                  color: pathname === "/user/messages" ? "#FFBA6D" : "#777",
+                  color: pathname === "/messages" ? "#FFBA6D" : "#777",
                   transition: "color 0.3s",
                 }}
               >
                 <VscMail size={24} />
               </IconButton>
             </Link>
-            <Link href="/user/notifications" passHref>
+            <Link href="/notifications" passHref>
               <IconButton
                 sx={{
-                  color:
-                    pathname === "/user/notifications" ? "#FFBA6D" : "#777",
+                  color: pathname === "/notifications" ? "#FFBA6D" : "#777",
                   transition: "color 0.3s",
                 }}
               >

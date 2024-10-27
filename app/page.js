@@ -1,82 +1,171 @@
 "use client";
-import Logo from "@/app/logo.png";
-import styled from "@emotion/styled";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import {
+  Box,
+  TextField,
+  InputAdornment,
+  Typography,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Avatar,
+} from "@mui/material";
+import { VscSearch } from "react-icons/vsc";
+import UserLayout from "@/components/UserLayout";
 export default function Home() {
-  const router = useRouter();
-  const GlassButton = styled(Button)({
-    background: "rgba(255, 255, 255, 0.2)",
-    backdropFilter: "blur(10px)",
-    border: "1px solid rgba(255, 255, 255, 0.3)",
-    borderRadius: "10px",
-    color: "black",
-    padding: "10px 20px",
-    textTransform: "none",
-    fontSize: "16px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    "&:hover": {
-      background: "rgba(255, 255, 255, 0.3)",
-      border: "1px solid rgba(255, 255, 255, 0.4)",
+  const [searchTerm, setSearchTerm] = useState("");
+  const users = [
+    {
+      id: 1,
+      name: "Alice",
+      avatar: "https://i.pravatar.cc/150?img=1",
+      answers: 5,
     },
-    fontFamily:"__Roboto_b0d14b",
-    fontWeight:"500"
-  });
+    {
+      id: 2,
+      name: "Bob",
+      avatar: "https://i.pravatar.cc/150?img=2",
+      answers: 10,
+    },
+    {
+      id: 3,
+      name: "Charlie",
+      avatar: "https://i.pravatar.cc/150?img=3",
+      answers: 8,
+    },
+    {
+      id: 4,
+      name: "Diana",
+      avatar: "https://i.pravatar.cc/150?img=4",
+      answers: 12,
+    },
+    {
+      id: 5,
+      name: "Edward",
+      avatar: "https://i.pravatar.cc/150?img=5",
+      answers: 3,
+    },
+    {
+      id: 6,
+      name: "Fiona",
+      avatar: "https://i.pravatar.cc/150?img=6",
+      answers: 9,
+    },
+    {
+      id: 7,
+      name: "George",
+      avatar: "https://i.pravatar.cc/150?img=7",
+      answers: 6,
+    },
+    {
+      id: 8,
+      name: "Hannah",
+      avatar: "https://i.pravatar.cc/150?img=8",
+      answers: 15,
+    },
+    {
+      id: 9,
+      name: "Ian",
+      avatar: "https://i.pravatar.cc/150?img=9",
+      answers: 2,
+    },
+    {
+      id: 10,
+      name: "Jane",
+      avatar: "https://i.pravatar.cc/150?img=10",
+      answers: 7,
+    },
+  ];
+
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <Stack
-      height="100vh"
-      alignItems="center"
-      justifyContent="center"
-      spacing={{ xs: 2, md: 3 }}
-      sx={{ textAlign: "center", padding: { xs: 2, md: 4 } }}
-    >
+    <UserLayout>
       <Box
-        component={Image}
-        src={Logo}
-        alt="PurrGatto Logo"
-        width={{ xs: 120, md: 250 }}
-        height={{ xs: 120, md: 250 }}
-        sx={{ mb: { xs: 2, md: 4 } }}
-      />
-      <Typography
-        variant="h2"
-        fontWeight={900}
-        fontSize={{ xs: 35, md: 50 }}
-        sx={{ mb: { xs: 1, md: 2 } }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mt: 4,
+        }}
       >
-        PurrGatto
-      </Typography>
-      <Typography
-        variant="h5"
-        fontWeight={400}
-        fontSize={{ xs: 18, md: 30 }}
-        sx={{ mb: { xs: 2, md: 3 } }}
-      >
-        Where every question has nine lives!
-      </Typography>
-      <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-        <GlassButton
-          onClick={() => {
-            router.push("/login");
+        <Typography variant="h4" sx={{ mb: 3, textAlign: "center" }}>
+          Welcome to PurrGatto!
+        </Typography>
+        <Box sx={{ mb: 3, display: "flex", alignItems: "center", gap: 2 }}>
+          <TextField
+            variant="outlined"
+            placeholder="Search user..."
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Box component={VscSearch} size={24} marginRight={1} />
+                </InputAdornment>
+              ),
+              sx: {
+                borderRadius: "25px", // Rounded corners
+                backgroundColor: "white", // Frosted glass background
+                padding: "5px 10px",
+                boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                backdropFilter: "blur(10px)", // Frosted glass effect
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "none", // Remove border
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  border: "2px solid #FFBA6D",
+                },
+              },
+            }}
+            sx={{
+              width: {
+                xs: "100%",
+                sm: 400,
+              },
+            }}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </Box>
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: 600,
+            maxHeight: {
+              xs: "30vh",
+              sm: "52vh",
+            },
+            overflowY: "auto",
+            "&::-webkit-scrollbar": { width: "8px" },
+            "&::-webkit-scrollbar-track": { backgroundColor: "#f6eee6" },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#FCE3CD",
+              borderRadius: "6px",
+            },
           }}
         >
-          Already have an account?
-        </GlassButton>
-        <GlassButton
-          onClick={() => {
-            router.push("/signup");
-          }}
-        >
-          New here? Sign up!
-        </GlassButton>
-      </Stack>
-      <Typography variant="body2" mt={4} sx={{ fontSize: { xs: 12, md: 14 } }}>
-        Developed with dedication by{" "}
-        <span style={{ color: "#FFBA6D", fontWeight: "500" }}>Ahmed Anany</span>{" "}
-        &copy; {new Date().getFullYear()}
-      </Typography>
-    </Stack>
+          {filteredUsers.length === 0 ? (
+            <Typography variant="body1" sx={{ textAlign: "center", mt: 2 }}>
+              No users exist
+            </Typography>
+          ) : (
+            <List>
+              {filteredUsers.map((user) => (
+                <ListItem key={user.id}>
+                  <ListItemAvatar>
+                    <Avatar src={user.avatar} alt={user.name} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={user.name}
+                    secondary={`${user.answers} answers`}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          )}
+        </Box>
+      </Box>
+    </UserLayout>
   );
 }
