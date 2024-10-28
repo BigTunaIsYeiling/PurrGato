@@ -9,7 +9,7 @@ import {
   Divider,
   Stack,
 } from "@mui/material";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { VscAccount, VscBell, VscHome, VscMail } from "react-icons/vsc";
 import Link from "next/link";
@@ -17,6 +17,7 @@ import Image from "next/image";
 import Logo from "@/app/logo.png"; // Adjust this path if necessary
 import UserDialog from "@/components/ChangeUserSettings";
 export default function NavBar() {
+  const router = useRouter();
   const pathname = usePathname();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -27,7 +28,17 @@ export default function NavBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
+  const handleLogout = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/user/logout`,
+      {
+        credentials: "include",
+      }
+    );
+    if (response.ok) {
+      router.push("/register");
+    }
+  };
   return (
     <>
       <Menu
@@ -49,7 +60,7 @@ export default function NavBar() {
       >
         <UserDialog />
         <Divider />
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem onClick={handleLogout}>
           <Typography variant="body2" color="error">
             Sign out
           </Typography>
