@@ -19,11 +19,11 @@ const fetcher = (...args) =>
     credentials: "include",
   }).then((res) => res.json());
 export default function Home() {
+  const [searchTerm, setSearchTerm] = useState("");
   const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/`,
     fetcher
   );
-  const [searchTerm, setSearchTerm] = useState("");
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
   console.log(data);
