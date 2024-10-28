@@ -5,6 +5,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import styled from "@emotion/styled";
 import Link from "next/link";
+import toast from "react-hot-toast";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.2)",
   backdropFilter: "blur(10px)",
@@ -59,12 +60,25 @@ const GlassInput = styled("input")({
 });
 
 const Signup = () => {
-  const [email, setEmail] = useState("");
+  const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignup = () => {
-    // Handle email/password signup logic here
+  const handleSignup = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const data = await response.json();
+      return data.errors.forEach((error) => toast.error(error));
+    }
+    const data = await response.json();
+    return toast.success(data.message);
   };
 
   const handleTwitterSignup = () => {
@@ -95,10 +109,11 @@ const Signup = () => {
       </Typography>
       <Box component="form" noValidate autoComplete="off">
         <GlassInput
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="username"
+          value={username}
+          onChange={(e) => setusername(e.target.value)}
+          autoComplete="username"
         />
         <Box sx={{ position: "relative" }}>
           <GlassInput
@@ -106,6 +121,7 @@ const Signup = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
           />
           <IconButton
             onClick={togglePasswordVisibility}
