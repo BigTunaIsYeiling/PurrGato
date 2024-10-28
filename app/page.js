@@ -81,7 +81,6 @@ export default function Home() {
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
   return (
     <UserLayout>
       <Box
