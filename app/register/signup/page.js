@@ -82,7 +82,7 @@ const Signup = () => {
   };
 
   const handleTwitterSignup = () => {
-    // Handle Twitter signup logic here
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/user/auth/twitter`;
   };
 
   const togglePasswordVisibility = () => {
