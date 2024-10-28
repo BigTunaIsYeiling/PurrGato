@@ -6,6 +6,7 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.2)",
   backdropFilter: "blur(10px)",
@@ -60,10 +61,10 @@ const GlassInput = styled("input")({
 });
 
 const Signup = () => {
+  const router = useRouter();
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
   const handleSignup = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/`, {
       method: "POST",
@@ -77,8 +78,7 @@ const Signup = () => {
       const data = await response.json();
       return data.errors.forEach((error) => toast.error(error));
     }
-    const data = await response.json();
-    return toast.success(data.message);
+    return router.push("/");
   };
 
   const handleTwitterSignup = () => {

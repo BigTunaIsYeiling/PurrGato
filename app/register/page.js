@@ -82,8 +82,7 @@ const Login = () => {
       const data = await response.json();
       return data.errors.forEach((error) => toast.error(error));
     }
-    const data = await response.json();
-    return toast.success(data.message);
+    return router.push("/");
   };
 
   const handleTwitterLogin = () => {
