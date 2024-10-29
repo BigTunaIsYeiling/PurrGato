@@ -166,7 +166,14 @@ export default function NavBar({ avatar }) {
               display: { xs: "none", sm: "inline-flex " },
             }}
           >
-            <Avatar alt="User Avatar" src={avatar} />
+            <Avatar
+              alt="User Avatar"
+              src={avatar}
+              sx={{
+                width: 32,
+                height: 32,
+              }}
+            />
           </IconButton>
           <Box
             sx={{
@@ -233,7 +240,14 @@ export default function NavBar({ avatar }) {
                 },
               }}
             >
-              <Avatar alt="User Avatar" src={avatar} />
+              <Avatar
+                alt="User Avatar"
+                src={avatar}
+                sx={{
+                  width: 32,
+                  height: 32,
+                }}
+              />
             </IconButton>
           </Box>
         </Box>

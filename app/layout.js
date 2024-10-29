@@ -1,6 +1,7 @@
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import { Roboto } from "next/font/google";
+import SWRProvider from "@/SWRProvider";
 const roboto = Roboto({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
@@ -27,7 +28,7 @@ export default function RootLayout({ children }) {
               duration: 1800,
             }}
           />
-          {children}
+          <SWRProvider>{children}</SWRProvider>
         </div>
       </body>
     </html>
