@@ -2,7 +2,18 @@
 import NavBar from "@/components/user/NavBar";
 import GuestNavBar from "@/components/user/UnloggedNavBar";
 import { Box } from "@mui/material";
+import useSWR from "swr";
+const fetcher = (...args) =>
+  fetch(...args, {
+    credentials: "include",
+  }).then((res) => res.json());
 const UserLayout = ({ children }) => {
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/`,
+    fetcher
+  );
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
   return (
     <Box
       sx={{
@@ -12,7 +23,7 @@ const UserLayout = ({ children }) => {
         position: "relative",
       }}
     >
-      <NavBar />
+      <NavBar avatar={data.avatar} />
       <Box
         sx={{
           flexGrow: 1,

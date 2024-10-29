@@ -8,6 +8,7 @@ import {
   Typography,
   Divider,
   Stack,
+  Avatar,
 } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,15 +17,13 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/app/logo.png"; // Adjust this path if necessary
 import UserDialog from "@/components/ChangeUserSettings";
-export default function NavBar() {
+export default function NavBar({ avatar }) {
   const router = useRouter();
   const pathname = usePathname();
   const [anchorEl, setAnchorEl] = useState(null);
-
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -167,19 +166,7 @@ export default function NavBar() {
               display: { xs: "none", sm: "inline-flex " },
             }}
           >
-            <Stack
-              sx={{
-                width: "30px",
-                height: "30px",
-                borderRadius: "50%",
-              }}
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Typography variant="body3" color="black">
-                A
-              </Typography>
-            </Stack>
+            <Avatar alt="User Avatar" src={avatar} />
           </IconButton>
           <Box
             sx={{
@@ -246,19 +233,7 @@ export default function NavBar() {
                 },
               }}
             >
-              <Stack
-                sx={{
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "50%",
-                }}
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Typography variant="body3" color="black">
-                  A
-                </Typography>
-              </Stack>
+              <Avatar alt="User Avatar" src={avatar} />
             </IconButton>
           </Box>
         </Box>

@@ -13,20 +13,8 @@ import {
 } from "@mui/material";
 import { VscSearch } from "react-icons/vsc";
 import UserLayout from "@/components/UserLayout";
-import useSWR from "swr";
-const fetcher = (...args) =>
-  fetch(...args, {
-    credentials: "include",
-  }).then((res) => res.json());
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/`,
-    fetcher
-  );
-  if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
-  console.log(data);
   const users = [
     {
       id: 1,
