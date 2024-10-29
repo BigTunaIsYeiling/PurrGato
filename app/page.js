@@ -13,8 +13,15 @@ import {
 } from "@mui/material";
 import { VscSearch } from "react-icons/vsc";
 import UserLayout from "@/components/UserLayout";
+import useSWR from "swr";
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/users`
+  );
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
+  console.log(data);
   const users = [
     {
       id: 1,
@@ -78,8 +85,8 @@ export default function Home() {
     },
   ];
 
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = data.filter((user) =>
+    user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
     <UserLayout>
@@ -151,13 +158,60 @@ export default function Home() {
           ) : (
             <List>
               {filteredUsers.map((user) => (
-                <ListItem key={user.id}>
+                <ListItem
+                  alignItems="flex-start"
+                  key={user.id}
+                  sx={{
+                    cursor: "pointer",
+                    mb: 1,
+                    p: 1,
+                  }}
+                >
                   <ListItemAvatar>
-                    <Avatar src={user.avatar} alt={user.name} />
+                    <Avatar
+                      alt={user.username}
+                      src={user.avatar}
+                      sx={{ width: 40, height: 40 }}
+                    />
                   </ListItemAvatar>
                   <ListItemText
-                    primary={user.name}
-                    secondary={`${user.answers} answers`}
+                    primary={
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontWeight: 500,
+                          fontSize: "17px",
+                          color: "text.primary",
+                        }}
+                      >
+                        {user.username}
+                      </Typography>
+                    }
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          sx={{
+                            fontSize: "15px",
+                            display: "inline",
+                            color: "black",
+                            fontWeight: 500,
+                          }}
+                        >
+                          0 answers
+                        </Typography>
+                        {" — "}
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          sx={{ fontSize: "15px", color: "text.secondary" }}
+                        >
+                          {user.bio.slice(0, 55)}
+                          {user.bio.length > 55 && ".."}
+                        </Typography>
+                      </React.Fragment>
+                    }
                   />
                 </ListItem>
               ))}
