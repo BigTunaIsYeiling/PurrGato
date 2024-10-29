@@ -7,9 +7,7 @@ import {
   MenuItem,
   Typography,
   Divider,
-  Stack,
   Avatar,
-  ListItemText,
   ListItemIcon,
 } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
@@ -94,6 +92,7 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
         }}
       >
         <UserDialog
+          id={id}
           isTwitter={isTwitter}
           username={username}
           avatar={avatar}
@@ -171,15 +170,10 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
                 <VscHome size={24} />
               </IconButton>
             </Link>
-            <Link href={`/1`} passHref>
+            <Link href={`/${id}`} passHref>
               <IconButton
                 sx={{
-                  color:
-                    pathname == `/` ||
-                    pathname == "/messages" ||
-                    pathname == "/notifications"
-                      ? "#777"
-                      : "#FFBA6D",
+                  color: pathname != `/${id}` ? "#777" : "#FFBA6D",
                   transition: "color 0.3s",
                 }}
               >
@@ -247,15 +241,10 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
                 <VscHome size={24} />
               </IconButton>
             </Link>
-            <Link href={`/1`} passHref>
+            <Link href={`/${id}`} passHref>
               <IconButton
                 sx={{
-                  color:
-                    pathname == `/` ||
-                    pathname == "/messages" ||
-                    pathname == "/notifications"
-                      ? "#777"
-                      : "#FFBA6D",
+                  color: pathname != `/${id}` ? "#777" : "#FFBA6D",
                   transition: "color 0.3s",
                 }}
               >

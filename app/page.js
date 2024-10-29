@@ -14,77 +14,15 @@ import {
 import { VscSearch } from "react-icons/vsc";
 import UserLayout from "@/components/UserLayout";
 import useSWR from "swr";
+import { useRouter } from "next/navigation";
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
   const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/users`
   );
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
-  console.log(data);
-  const users = [
-    {
-      id: 1,
-      name: "Alice",
-      avatar: "https://i.pravatar.cc/150?img=1",
-      answers: 5,
-    },
-    {
-      id: 2,
-      name: "Bob",
-      avatar: "https://i.pravatar.cc/150?img=2",
-      answers: 10,
-    },
-    {
-      id: 3,
-      name: "Charlie",
-      avatar: "https://i.pravatar.cc/150?img=3",
-      answers: 8,
-    },
-    {
-      id: 4,
-      name: "Diana",
-      avatar: "https://i.pravatar.cc/150?img=4",
-      answers: 12,
-    },
-    {
-      id: 5,
-      name: "Edward",
-      avatar: "https://i.pravatar.cc/150?img=5",
-      answers: 3,
-    },
-    {
-      id: 6,
-      name: "Fiona",
-      avatar: "https://i.pravatar.cc/150?img=6",
-      answers: 9,
-    },
-    {
-      id: 7,
-      name: "George",
-      avatar: "https://i.pravatar.cc/150?img=7",
-      answers: 6,
-    },
-    {
-      id: 8,
-      name: "Hannah",
-      avatar: "https://i.pravatar.cc/150?img=8",
-      answers: 15,
-    },
-    {
-      id: 9,
-      name: "Ian",
-      avatar: "https://i.pravatar.cc/150?img=9",
-      answers: 2,
-    },
-    {
-      id: 10,
-      name: "Jane",
-      avatar: "https://i.pravatar.cc/150?img=10",
-      answers: 7,
-    },
-  ];
-
   const filteredUsers = data.filter((user) =>
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -165,6 +103,9 @@ export default function Home() {
                     cursor: "pointer",
                     mb: 1,
                     p: 1,
+                  }}
+                  onClick={() => {
+                    router.push(`/${user.id}`);
                   }}
                 >
                   <ListItemAvatar>

@@ -139,8 +139,8 @@ const Answers = () => {
   return (
     <>
       <Box sx={{ width: "100%", maxWidth: 600, textAlign: "left" }}>
-        <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
-          Answers
+        <Typography sx={{ mt: 4, mb: 2, fontSize: "17px", fontWeight: "500" }}>
+          Answers / 18
         </Typography>
       </Box>
       <Box sx={{ width: "100%", maxWidth: 600 }}>

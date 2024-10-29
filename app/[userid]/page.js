@@ -10,47 +10,33 @@ import {
 } from "@mui/material";
 import Answers from "@/components/user/Answers";
 import UserLayout from "@/components/UserLayout";
-
+import useSWR from "swr";
 const GlassButton = styled(Button)({
-  background: "#FCE3CD",
+  background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
   border: "1px solid rgba(255, 255, 255, 0.3)",
-  borderRadius: "10px",
+  borderRadius: "25px",
   color: "black",
-  padding: "5px 10px",
+  padding: "15px",
   textTransform: "none",
   fontSize: "14px",
   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  position: "absolute",
-  bottom: 10,
-  right: 10,
   "&:hover": {
-    background: "#FCE3CD",
-    border: "1px solid rgba(255, 255, 255, 0.4)",
+    background: "rgba(255, 255, 255, 0.3)",
   },
+  marginTop: "10px",
+  marginBottom: "10px",
 });
 
 const UserProfile = ({ params }) => {
   const { userid } = use(params);
-  const userData = {
-    1: {
-      id: 1,
-      name: "Alice",
-      avatar: "https://i.pravatar.cc/150?img=1",
-      answers: 5,
-    },
-    2: {
-      id: 2,
-      name: "Bob",
-      avatar: "https://i.pravatar.cc/150?img=2",
-      answers: 10,
-    },
-    // Add more user data here
-  };
-  const user = userData[userid];
   const [message, setMessage] = useState("");
-
-  if (!user) {
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`
+  );
+  if (isLoading) return <div>Loading...</div>;
+  console.log(data);
+  if (!data || error) {
     return <Typography variant="h6">User not found</Typography>;
   }
   return (
@@ -61,19 +47,32 @@ const UserProfile = ({ params }) => {
           flexDirection: "column",
           alignItems: "center",
           mt: 4,
+          overflowX: "hidden",
         }}
       >
-        <Avatar
-          src={user.avatar}
-          alt={user.name}
-          sx={{ width: 100, height: 100 }}
-        />
-
-        <Typography variant="h4" sx={{ mt: 2 }}>
-          {user.name}
+        <Box
+          p={1}
+          sx={{
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+          }}
+          borderRadius={"50%"}
+        >
+          <Avatar
+            src={data.avatar}
+            alt={data.username}
+            sx={{ width: 70, height: 70 }}
+          />
+        </Box>
+        <Typography sx={{ mt: 2, fontSize: "28px", fontWeight: 500 }}>
+          {data.username}
         </Typography>
-        <Typography variant="body1">{user.answers} answers</Typography>
-        <Box sx={{ position: "relative", width: "100%", maxWidth: 600 }}>
+        <Typography
+          variant="body1"
+          sx={{ my: 1, fontWeight: "400", color: "#777", textAlign: "center" }}
+        >
+          {data.bio}
+        </Typography>
+        <Box sx={{ width: "100%", maxWidth: 600 }}>
           <TextField
             placeholder="Send Anonymous Message"
             multiline
@@ -111,8 +110,11 @@ const UserProfile = ({ params }) => {
               },
             }}
           />
-
-          <GlassButton disabled={message == ""}>Send</GlassButton>
+        </Box>
+        <Box sx={{ width: "100%", maxWidth: 600 }}>
+          <GlassButton disabled={message == ""} sx={{ width: "100%" }}>
+            Send
+          </GlassButton>
         </Box>
         <Answers />
       </Box>

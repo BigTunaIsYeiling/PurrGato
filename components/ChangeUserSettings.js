@@ -34,7 +34,7 @@ const GlassButton = styled(Button)({
   },
 });
 
-export default function UserDialog({ isTwitter, username, avatar }) {
+export default function UserDialog({ isTwitter, username, avatar, id }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -81,6 +81,7 @@ export default function UserDialog({ isTwitter, username, avatar }) {
       toast.success("User updated successfully", { id: toastId });
       handleClose();
       mutate(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
+      mutate(`${process.env.NEXT_PUBLIC_API_URL}/user/one/${id}`);
     } else {
       const data = await response.json();
       return data.errors.forEach((error) => {
