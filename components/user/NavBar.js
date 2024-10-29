@@ -9,6 +9,8 @@ import {
   Divider,
   Stack,
   Avatar,
+  ListItemText,
+  ListItemIcon,
 } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -17,7 +19,9 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/app/logo.png"; // Adjust this path if necessary
 import UserDialog from "@/components/ChangeUserSettings";
-export default function NavBar({ avatar }) {
+import { IoIosLogOut } from "react-icons/io";
+import { IoShareOutline } from "react-icons/io5";
+export default function NavBar({ avatar, isTwitter, username, id }) {
   const router = useRouter();
   const pathname = usePathname();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -38,6 +42,37 @@ export default function NavBar({ avatar }) {
       router.push("/register");
     }
   };
+  let isSharing = false;
+
+  const CopyShareProfile = async (id) => {
+    if (isSharing) {
+      console.warn("A share action is already in progress.");
+      return;
+    }
+    const url = `${window.location.origin}/${id}`;
+    const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+      url
+    )}&text=Check out this profile!`;
+
+    isSharing = true;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Check out this profile!",
+          text: "Check out this profile!",
+          url: twitterShareUrl,
+        });
+      } catch (err) {
+        console.error("Error sharing profile:", err);
+      } finally {
+        isSharing = false;
+      }
+    } else {
+      // Fallback for browsers that do not support navigator.share
+      window.open(twitterShareUrl, "_blank");
+      isSharing = false;
+    }
+  };
   return (
     <>
       <Menu
@@ -53,16 +88,34 @@ export default function NavBar({ avatar }) {
               border: "1px solid rgba(255, 255, 255, 0.18)",
               boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
               p: 1,
+              width: 200,
             },
           },
         }}
       >
-        <UserDialog />
+        <UserDialog
+          isTwitter={isTwitter}
+          username={username}
+          avatar={avatar}
+        />
+        <MenuItem
+          sx={{ display: "flex", justifyContent: "space-between" }}
+          onClick={() => CopyShareProfile(id)}
+        >
+          <Typography>Share profile</Typography>
+          <ListItemIcon>
+            <IoShareOutline size={20} />
+          </ListItemIcon>
+        </MenuItem>
         <Divider />
-        <MenuItem onClick={handleLogout}>
-          <Typography variant="body2" color="error">
-            Sign out
-          </Typography>
+        <MenuItem
+          onClick={handleLogout}
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <Box color="#d32f2f">Sign out</Box>
+          <ListItemIcon>
+            <IoIosLogOut size={20} color="#d32f2f" />
+          </ListItemIcon>
         </MenuItem>
       </Menu>
       <AppBar

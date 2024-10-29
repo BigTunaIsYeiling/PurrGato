@@ -9,6 +9,7 @@ const UserLayout = ({ children }) => {
   );
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
+  console.log(data);
   return (
     <Box
       sx={{
@@ -18,7 +19,12 @@ const UserLayout = ({ children }) => {
         position: "relative",
       }}
     >
-      <NavBar avatar={data.avatar} />
+      <NavBar
+        avatar={data.avatar}
+        isTwitter={data.isTwitter}
+        username={data.username}
+        id={data.id}
+      />
       <Box
         sx={{
           flexGrow: 1,

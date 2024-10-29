@@ -1,5 +1,4 @@
 "use client";
-import * as React from "react";
 import {
   Button,
   Dialog,
@@ -11,11 +10,15 @@ import {
   Divider,
   Avatar,
   TextField,
+  ListItemIcon,
 } from "@mui/material";
 import { CiSettings } from "react-icons/ci";
 import { AiOutlineClose } from "react-icons/ai";
 import { styled } from "@mui/system";
 import { TbCameraMinus } from "react-icons/tb";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import { mutate } from "swr";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
@@ -31,8 +34,8 @@ const GlassButton = styled(Button)({
   },
 });
 
-export default function UserDialog() {
-  const [open, setOpen] = React.useState(false);
+export default function UserDialog({ isTwitter, username, avatar }) {
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -41,43 +44,93 @@ export default function UserDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const [rev, setRev] = useState(null);
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [NewUsername, setUsername] = useState("");
+  const [NewBio, setBio] = useState("");
+  const [NewPassword, setPassword] = useState("");
+  const DisplayAvatar = (file) => {
+    setRev(URL.createObjectURL(file));
+  };
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    setAvatarFile(file);
+    if (file) {
+      DisplayAvatar(file);
+    }
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("avatar", avatarFile);
+    formData.append("username", NewUsername);
+    formData.append("bio", NewBio);
+    formData.append("password", NewPassword);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+      method: "PUT",
+      body: formData,
+      credentials: "include",
+    });
+    if (response.ok) {
+      mutate(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
+    } else {
+      toast.error("Failed to update user");
+    }
+  };
   return (
     <>
-      <MenuItem onClick={handleClickOpen}>
-        <Box
-          sx={{
-            backdropFilter: "blur(10px)",
-            borderRadius: 1,
-          }}
-        >
-          <Stack
-            direction={"row"}
-            alignItems={"center"}
-            justifyContent={"space-between"}
-          >
-            <Typography variant="body1" fontWeight="600">
-              Ahmed
-            </Typography>
-            <CiSettings size={20} />
-          </Stack>
-          <Typography variant="body2">ahmedenany9812@gmail.com</Typography>
-        </Box>
+      <MenuItem
+        sx={{ display: "flex", justifyContent: "space-between" }}
+        onClick={handleClickOpen}
+      >
+        <Stack direction={"column"}>
+          <Typography>
+            {username.slice(0, 9)}
+            {username.length > 9 && ".."}
+          </Typography>
+          <Typography color="#777">
+            {isTwitter ? "Twitter User" : "PurrGato User"}
+          </Typography>
+        </Stack>
+        <ListItemIcon>
+          <CiSettings size={20} />
+        </ListItemIcon>
       </MenuItem>
       <Dialog
         open={open}
         onClose={handleClose}
-        // fullScreen={{ xs: true, sm: false }}
         PaperProps={{
           sx: {
             background: "linear-gradient(180deg, #f8f4f0, #fdecd2)", // Gradient background
             borderRadius: { xs: "10px", sm: "10px" },
             padding: "10px",
             height: { xs: "100%", sm: "auto" }, // Full height on small screens, auto on larger
-            width: { xs: "100%", sm: "auto" }, // Full width on small screens, 600px on larger
+            width: { xs: "100%", sm: 500 }, // Full width on small screens, 600px on larger
             overflowX: "hidden",
+            "&::-webkit-scrollbar": { width: "15px" },
+            "&::-webkit-scrollbar-track": { backgroundColor: "white" },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#FCE3CD",
+            },
+            "&::-webkit-scrollbar-button": {
+              backgroundColor: "#FCE3CD" /* Background of the buttons */,
+              width: "15px",
+              height: "10px",
+            },
+            "&::-webkit-scrollbar-button:single-button:decrement": {
+              backgroundImage:
+                'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8l8 8H4z"/></svg>\')',
+              backgroundSize: "15px 10px" /* Adjust size to fit the button */,
+            },
+            "&::-webkit-scrollbar-button:single-button:increment": {
+              backgroundImage:
+                'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 16l-8-8h16z"/></svg>\')',
+              backgroundSize: "15px 10px" /* Adjust size to fit the button */,
+            },
           },
         }}
+        component={"form"}
+        onSubmit={handleSubmit}
       >
         <Box
           sx={{
@@ -88,7 +141,7 @@ export default function UserDialog() {
           }}
         >
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
-            Edit User
+            User Options
           </Typography>
           <IconButton
             edge="end"
@@ -112,7 +165,7 @@ export default function UserDialog() {
             }}
           >
             <Avatar
-              src="https://i.pravatar.cc/150?img=1"
+              src={rev ? rev : avatar}
               alt="Upload Photo"
               sx={{ width: 80, height: 80 }}
             />
@@ -131,8 +184,36 @@ export default function UserDialog() {
               }}
             >
               <TbCameraMinus />
-              <input hidden accept="image/*" type="file" />
+              <input
+                hidden
+                accept="image/*"
+                type="file"
+                onChange={handleAvatarChange}
+              />
             </IconButton>
+          </Box>
+          <Box sx={{ mb: 2 }}>
+            <TextField
+              variant="outlined"
+              placeholder="Update bio"
+              InputProps={{
+                sx: {
+                  borderRadius: "25px",
+                  backgroundColor: "white",
+                  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                  backdropFilter: "blur(10px)",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    border: "none", // Remove border
+                  },
+                },
+              }}
+              multiline
+              rows={3}
+              sx={{ width: "100%" }}
+              value={NewBio}
+              onChange={(e) => setBio(e.target.value)}
+              onKeyDown={(e) => e.stopPropagation()}
+            />
           </Box>
           <Box sx={{ mb: 2 }}>
             <TextField
@@ -150,55 +231,59 @@ export default function UserDialog() {
                   },
                 },
               }}
-              sx={{ width: { xs: "100%", sm: 300 } }}
+              value={NewUsername}
+              onChange={(e) => setUsername(e.target.value)}
+              sx={{ width: "100%" }}
+              autoComplete="username"
+              onKeyDown={(e) => e.stopPropagation()}
             />
           </Box>
-          <Box sx={{ mb: 2 }}>
-            <TextField
-              variant="outlined"
-              placeholder="New Email"
-              InputProps={{
-                sx: {
-                  borderRadius: "25px",
-                  backgroundColor: "white",
-                  padding: "2px",
-                  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                  backdropFilter: "blur(10px)",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    border: "none", // Remove border
+          {!isTwitter && (
+            <Box sx={{ mb: 2 }}>
+              <TextField
+                variant="outlined"
+                placeholder="New Password"
+                type="password"
+                InputProps={{
+                  sx: {
+                    borderRadius: "25px",
+                    backgroundColor: "white",
+                    padding: "2px",
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                    backdropFilter: "blur(10px)",
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      border: "none", // Remove border
+                    },
                   },
-                },
-              }}
-              sx={{ width: { xs: "100%", sm: 300 } }}
-            />
-          </Box>
-          <Box sx={{ mb: 2 }}>
-            <TextField
-              variant="outlined"
-              placeholder="New Password"
-              type="password"
-              InputProps={{
-                sx: {
-                  borderRadius: "25px",
-                  backgroundColor: "white",
-                  padding: "2px",
-                  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                  backdropFilter: "blur(10px)",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    border: "none", // Remove border
-                  },
-                },
-              }}
-              sx={{ width: { xs: "100%", sm: 300 } }}
-            />
-          </Box>
+                }}
+                sx={{ width: "100%" }}
+                value={NewPassword}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="new-password"
+                onKeyDown={(e) => e.stopPropagation()}
+              />
+            </Box>
+          )}
           <Divider sx={{ my: 3 }} />
-          <GlassButton sx={{ color: "#FF6B6B", mb: 2 }}>
-            Delete Account
-          </GlassButton>
+          <Stack direction={"column"} alignItems={"flex-start"}>
+            <GlassButton sx={{ mb: 2 }} disabled>
+              Download Your Twitter Api
+            </GlassButton>
+            <GlassButton sx={{ color: "#FF6B6B", mb: 2 }}>
+              Delete Account
+            </GlassButton>
+          </Stack>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
-          <GlassButton onClick={() => alert("Save changes logic here")}>
+          <GlassButton
+            type="submit"
+            disabled={
+              NewUsername == "" &&
+              NewPassword == "" &&
+              NewBio == "" &&
+              !avatarFile
+            }
+          >
             Apply
           </GlassButton>
         </Box>
