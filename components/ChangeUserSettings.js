@@ -43,6 +43,11 @@ export default function UserDialog({ isTwitter, username, avatar }) {
 
   const handleClose = () => {
     setOpen(false);
+    setRev(null);
+    setAvatarFile(null);
+    setUsername("");
+    setBio("");
+    setPassword("");
   };
   const [rev, setRev] = useState(null);
   const [avatarFile, setAvatarFile] = useState(null);
@@ -60,6 +65,7 @@ export default function UserDialog({ isTwitter, username, avatar }) {
     }
   };
   const handleSubmit = async (e) => {
+    const toastId = toast.loading("Updating...");
     e.preventDefault();
     const formData = new FormData();
     formData.append("avatar", avatarFile);
@@ -72,9 +78,14 @@ export default function UserDialog({ isTwitter, username, avatar }) {
       credentials: "include",
     });
     if (response.ok) {
+      toast.success("User updated successfully", { id: toastId });
+      handleClose();
       mutate(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
     } else {
-      toast.error("Failed to update user");
+      const data = await response.json();
+      return data.errors.forEach((error) => {
+        toast.error(error, { id: toastId });
+      });
     }
   };
   return (
