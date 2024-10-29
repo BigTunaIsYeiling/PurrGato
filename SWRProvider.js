@@ -1,13 +1,25 @@
 "use client";
 import { SWRConfig } from "swr";
+
 const SWRProvider = ({ children }) => {
   return (
     <SWRConfig
       value={{
-        fetcher: (...args) =>
-          fetch(...args, {
+        fetcher: async (...args) => {
+          const res = await fetch(...args, {
             credentials: "include",
-          }).then((res) => res.json()),
+          });
+          if (!res.ok) {
+            const errorData = await res.json();
+            const error = new Error(
+              "An error occurred while fetching the data."
+            );
+            error.info = errorData;
+            error.status = res.status;
+            throw error;
+          }
+          return res.json();
+        },
         revalidateOnFocus: false,
         revalidateOnReconnect: true,
         shouldRetryOnError: false,

@@ -35,7 +35,6 @@ const UserProfile = ({ params }) => {
     `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`
   );
   if (isLoading) return <div>Loading...</div>;
-  console.log(data);
   if (!data || error) {
     return <Typography variant="h6">User not found</Typography>;
   }

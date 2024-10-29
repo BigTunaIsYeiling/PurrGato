@@ -7,7 +7,6 @@ const UserLayout = ({ children }) => {
   const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/`
   );
-  if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
   return (
     <Box
@@ -18,20 +17,24 @@ const UserLayout = ({ children }) => {
         position: "relative",
       }}
     >
-      <NavBar
-        avatar={data.avatar}
-        isTwitter={data.isTwitter}
-        username={data.username}
-        id={data.id}
-      />
+      {error ? (
+        <GuestNavBar />
+      ) : (
+        <NavBar
+          avatar={data.avatar}
+          isTwitter={data.isTwitter}
+          username={data.username}
+          id={data.id}
+        />
+      )}
       <Box
         sx={{
           flexGrow: 1,
           padding: 2,
           overflowY: "auto",
           zIndex: 1,
-          marginTop: "-100px", // Ensure this matches or slightly exceeds your NavBar height
-          paddingTop: "100px", // Adjust padding to ensure content is not hidden behind the header
+          marginTop: error ? "-80px" : "-100px", // Ensure this matches or slightly exceeds your NavBar height
+          paddingTop: error ? "80px" : "100px", // Adjust padding to ensure content is not hidden behind the header
         }}
       >
         {children}
