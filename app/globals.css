@@ -4,7 +4,7 @@
   margin: 0;
 }
 .gradient-container {
-  background: linear-gradient(180deg, #f8f4f0, #fdecd2);
+  background: linear-gradient(180deg, #ffffff, #ffdda1);
   height: 100vh; /* Fixed height to cover exactly the viewport height */
   overflow-y: auto;
   display: flex;

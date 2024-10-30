@@ -49,7 +49,7 @@ export const Answer = ({ answer, setAnswers }) => {
         mb: 3,
         p: 3,
         borderRadius: "20px",
-        background: "white", // Frosted glass background
+        background: "#fffcf2", // Frosted glass background
         border: "1px solid rgba(255, 255, 255, 0.5)", // Glass effect border
         backdropFilter: "blur(10px)", // Frosted glass effect
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
