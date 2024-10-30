@@ -15,6 +15,7 @@ import { VscSearch } from "react-icons/vsc";
 import UserLayout from "@/components/UserLayout";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
+import LoadingScreen from "@/components/LoadingScreen";
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function Home() {
     `${process.env.NEXT_PUBLIC_API_URL}/user/users`
   );
   if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingScreen />;
   const filteredUsers = data.filter((user) =>
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
