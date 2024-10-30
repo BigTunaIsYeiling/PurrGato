@@ -3,11 +3,12 @@ import NavBar from "@/components/user/NavBar";
 import GuestNavBar from "@/components/user/UnloggedNavBar";
 import { Box } from "@mui/material";
 import useSWR from "swr";
+import LoadingScreen from "./LoadingScreen";
 const UserLayout = ({ children }) => {
   const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/`
   );
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingScreen />;
   return (
     <Box
       sx={{

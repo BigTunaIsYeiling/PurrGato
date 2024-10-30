@@ -11,6 +11,7 @@ import {
 import Answers from "@/components/user/Answers";
 import UserLayout from "@/components/UserLayout";
 import useSWR from "swr";
+import LoadingScreen from "@/components/LoadingScreen";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
@@ -34,7 +35,7 @@ const UserProfile = ({ params }) => {
   const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`
   );
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingScreen />;
   if (!data || error) {
     return <Typography variant="h6">User not found</Typography>;
   }
