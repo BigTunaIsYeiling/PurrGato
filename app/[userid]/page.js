@@ -85,7 +85,7 @@ const UserProfile = ({ params }) => {
               mt: 3,
               width: "100%",
               borderRadius: "25px",
-              backgroundColor: "#fffcf2", // Frosted glass background
+              backgroundColor: "#FFFFFF", // Frosted glass background
               padding: "10px 15px",
               paddingBottom: "35px", // Prevent text from overlapping button
               boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
