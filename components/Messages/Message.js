@@ -1,30 +1,18 @@
 "use client";
-import styled from "@emotion/styled";
 import {
   Box,
   Typography,
   Paper,
   IconButton,
-  Button,
   Avatar,
   Divider,
 } from "@mui/material";
 import { AiOutlineDelete } from "react-icons/ai";
-const GlassButton = styled(Button)({
-  background: "white",
-  backdropFilter: "blur(10px)",
-  border: "1px solid rgba(255, 255, 255, 0.3)",
-  borderRadius: "10px",
-  color: "black",
-  padding: "5px 10px",
-  textTransform: "none",
-  fontSize: "14px",
-  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-});
 import anon from "@/app/anon.png";
 import Image from "next/image";
 import { format, formatDistanceToNow } from "date-fns";
 import { mutate } from "swr";
+import ReplyComponent from "./ReplyComponent";
 const Message = ({ message, date, id }) => {
   const createdAt = new Date(date);
 
@@ -89,7 +77,7 @@ const Message = ({ message, date, id }) => {
           whiteSpace: "pre-wrap",
         }}
       >
-        {message} {/* Message ask in bold */}
+        {message}
       </Typography>
       <Divider sx={{ mb: 1 }} />
       <Box
@@ -99,7 +87,7 @@ const Message = ({ message, date, id }) => {
           alignItems: "center",
         }}
       >
-        <GlassButton>Reply</GlassButton>
+        <ReplyComponent />
         <IconButton sx={{ color: "#555" }} onClick={DeleteMessage}>
           <AiOutlineDelete size={20} />
         </IconButton>

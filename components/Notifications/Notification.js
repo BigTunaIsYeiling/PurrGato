@@ -11,7 +11,6 @@ import {
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoMdHeart } from "react-icons/io";
 import { RiQuestionAnswerFill } from "react-icons/ri";
-import { BiRightArrowAlt } from "react-icons/bi";
 import styled from "@emotion/styled";
 
 const GlassButton = styled(Button)({
