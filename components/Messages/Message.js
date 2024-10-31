@@ -24,7 +24,8 @@ const GlassButton = styled(Button)({
 import anon from "@/app/anon.png";
 import Image from "next/image";
 import { format, formatDistanceToNow } from "date-fns";
-const Message = ({ message, date }) => {
+import { mutate } from "swr";
+const Message = ({ message, date, id }) => {
   const createdAt = new Date(date);
 
   const formatDate = () => {
@@ -36,6 +37,22 @@ const Message = ({ message, date }) => {
     } else {
       return format(createdAt, "MM/dd/yyyy");
     }
+  };
+  const DeleteMessage = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/message`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ messageId: id }),
+      credentials: "include",
+    });
+    const data = await res.json();
+    if (res.ok) {
+      mutate(`${process.env.NEXT_PUBLIC_API_URL}/message`);
+      return mutate(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
+    }
+    return console.log(data);
   };
   return (
     <Paper
@@ -78,7 +95,7 @@ const Message = ({ message, date }) => {
         }}
       >
         <GlassButton>Reply</GlassButton>
-        <IconButton sx={{ color: "#555" }}>
+        <IconButton sx={{ color: "#555" }} onClick={DeleteMessage}>
           <AiOutlineDelete size={20} />
         </IconButton>
       </Box>
