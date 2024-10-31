@@ -1,5 +1,17 @@
+import React, {useState } from "react";
 import styled from "@emotion/styled";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  IconButton,
+  TextField,
+  Typography,
+  Box,
+  useMediaQuery,
+  useTheme,
+  Divider,
+} from "@mui/material";
+import { AiOutlineClose } from "react-icons/ai";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
@@ -16,10 +28,129 @@ const GlassButton = styled(Button)({
     background: "rgba(255, 255, 255, 0.3)",
   },
 });
-export default function ReplyComponent() {
+
+export default function ReplyComponent({ content, id }) {
+  const [open, setOpen] = useState(false);
+  const [replyText, setReplyText] = useState("");
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+  const handleReply = () => {
+    console.log("Reply text:", replyText);
+    handleClose();
+  };
+
   return (
     <>
-      <GlassButton>Reply</GlassButton>
+      <GlassButton onClick={handleOpen}>Reply</GlassButton>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullScreen={isSmallScreen}
+        PaperProps={{
+          sx: {
+            background: "#FFFCF2", // Gradient background
+            borderRadius: { xs: "0px", sm: "10px" },
+            padding: "10px",
+            height: { xs: "100%", sm: "auto" }, // Full height on small screens, auto on larger
+            width: { xs: "100%", sm: 500 }, // Full width on small screens, 600px on larger
+            overflowX: "hidden",
+            "&::-webkit-scrollbar": { width: "15px" },
+            "&::-webkit-scrollbar-track": { backgroundColor: "white" },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "#FCE3CD",
+            },
+            "&::-webkit-scrollbar-button": {
+              backgroundColor: "#FCE3CD" /* Background of the buttons */,
+              width: "15px",
+              height: "10px",
+            },
+            "&::-webkit-scrollbar-button:single-button:decrement": {
+              backgroundImage:
+                'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8l8 8H4z"/></svg>\')',
+              backgroundSize: "15px 10px" /* Adjust size to fit the button */,
+            },
+            "&::-webkit-scrollbar-button:single-button:increment": {
+              backgroundImage:
+                'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 16l-8-8h16z"/></svg>\')',
+              backgroundSize: "15px 10px" /* Adjust size to fit the button */,
+            },
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 3,
+            p: 2,
+          }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: 600 }}>
+            Send Reply
+          </Typography>
+          <IconButton
+            edge="end"
+            color="inherit"
+            onClick={handleClose}
+            aria-label="close"
+          >
+            <AiOutlineClose />
+          </IconButton>
+        </Box>
+        <Box sx={{ p: 3 }}>
+          <Box>jdakwdjawkdjak</Box>
+          <Divider sx={{ mt: 3 }} />
+          <Box sx={{ width: "100%", maxWidth: 600 }}>
+            <TextField
+              placeholder="Reply To Anonymous Message"
+              multiline
+              rows={6}
+              value={replyText}
+              onChange={(e) => setReplyText(e.target.value)}
+              variant="outlined"
+              slotProps={{
+                inputLabel: {
+                  shrink: false,
+                },
+              }}
+              sx={{
+                whiteSpace: "pre-wrap",
+                mt: 1,
+                width: "100%",
+                backgroundColor: "rgba(255, 255, 255, 0.25)",
+                overflow: "hidden",
+                border: "1px solid rgba(255, 255, 255, 0.3)", // Glass effect border
+                backdropFilter: "blur(10px)", // Frosted glass effect
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    border: "none", // Remove default border
+                  },
+                  "&.Mui-focused fieldset": {
+                    border: "none", // Remove default border on focus
+                  },
+                  "&:hover fieldset": {
+                    border: "none", // Remove default border on hover
+                  },
+                  padding: 0,
+                },
+                "& .MuiInputBase-inputMultiline": {
+                  "&::-webkit-scrollbar": {
+                    display: "none", // Hide scrollbar
+                  },
+                },
+              }}
+            />
+          </Box>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
+          <GlassButton type="submit">Send</GlassButton>
+        </Box>
+      </Dialog>
     </>
   );
 }
