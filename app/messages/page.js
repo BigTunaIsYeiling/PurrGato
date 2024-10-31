@@ -1,4 +1,5 @@
 "use client";
+import LoadingScreen from "@/components/LoadingScreen";
 import MessageList from "@/components/Messages/MessagesList";
 import UserLayout from "@/components/UserLayout";
 import { Box, Typography, Container } from "@mui/material";
@@ -8,7 +9,7 @@ const MessagesPage = () => {
     `${process.env.NEXT_PUBLIC_API_URL}/message`
   );
   if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingScreen />;
   console.log(data);
   return (
     <UserLayout>

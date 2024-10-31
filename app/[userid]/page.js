@@ -12,6 +12,7 @@ import Answers from "@/components/user/Answers";
 import UserLayout from "@/components/UserLayout";
 import useSWR from "swr";
 import LoadingScreen from "@/components/LoadingScreen";
+import toast from "react-hot-toast";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
@@ -60,7 +61,12 @@ const UserProfile = ({ params }) => {
       }
     );
     const data = await response.json();
-    return console.log(data);
+    if (response.ok) {
+      toast.success("Message sent successfully");
+      return setMessage("");
+    } else {
+      return toast.error(data.error);
+    }
   };
   return (
     <UserLayout>

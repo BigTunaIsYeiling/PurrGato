@@ -163,7 +163,7 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
             <Link href="/" passHref>
               <IconButton
                 sx={{
-                  color: pathname === "/" ? "#FFBA6D" : "#777",
+                  color: pathname === "/" ? "rgb(247,152,18)" : "#777",
                   transition: "color 0.3s",
                 }}
               >
@@ -173,7 +173,7 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
             <Link href={`/${id}`} passHref>
               <IconButton
                 sx={{
-                  color: pathname != `/${id}` ? "#777" : "#FFBA6D",
+                  color: pathname != `/${id}` ? "#777" : "rgb(247,152,18)",
                   transition: "color 0.3s",
                 }}
               >
@@ -183,7 +183,7 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
             <Link href="/messages" passHref>
               <IconButton
                 sx={{
-                  color: pathname === "/messages" ? "#FFBA6D" : "#777",
+                  color: pathname === "/messages" ? "rgb(247,152,18)" : "#777",
                   transition: "color 0.3s",
                 }}
               >
@@ -193,7 +193,8 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
             <Link href="/notifications" passHref>
               <IconButton
                 sx={{
-                  color: pathname === "/notifications" ? "#FFBA6D" : "#777",
+                  color:
+                    pathname === "/notifications" ? "rgb(247,152,18)" : "#777",
                   transition: "color 0.3s",
                 }}
               >
@@ -234,7 +235,7 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
             <Link href="/" passHref>
               <IconButton
                 sx={{
-                  color: pathname === "/" ? "#FFBA6D" : "#777",
+                  color: pathname === "/" ? "rgb(247,152,18)" : "#777",
                   transition: "color 0.3s",
                 }}
               >
@@ -244,7 +245,7 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
             <Link href={`/${id}`} passHref>
               <IconButton
                 sx={{
-                  color: pathname != `/${id}` ? "#777" : "#FFBA6D",
+                  color: pathname != `/${id}` ? "#777" : "rgb(247,152,18)",
                   transition: "color 0.3s",
                 }}
               >
@@ -254,7 +255,7 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
             <Link href="/messages" passHref>
               <IconButton
                 sx={{
-                  color: pathname === "/messages" ? "#FFBA6D" : "#777",
+                  color: pathname === "/messages" ? "rgb(247,152,18)" : "#777",
                   transition: "color 0.3s",
                 }}
               >
@@ -264,7 +265,8 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
             <Link href="/notifications" passHref>
               <IconButton
                 sx={{
-                  color: pathname === "/notifications" ? "#FFBA6D" : "#777",
+                  color:
+                    pathname === "/notifications" ? "rgb(247,152,18)" : "#777",
                   transition: "color 0.3s",
                 }}
               >
