@@ -26,6 +26,7 @@ const UserLayout = ({ children }) => {
           isTwitter={data.isTwitter}
           username={data.username}
           id={data.id}
+          messages={data.messages}
         />
       )}
       <Box

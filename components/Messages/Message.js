@@ -23,7 +23,20 @@ const GlassButton = styled(Button)({
 });
 import anon from "@/app/anon.png";
 import Image from "next/image";
-const Message = ({ message }) => {
+import { format, formatDistanceToNow } from "date-fns";
+const Message = ({ message, date }) => {
+  const createdAt = new Date(date);
+
+  const formatDate = () => {
+    const now = new Date();
+    const differenceInHours = (now - createdAt) / 1000 / 60 / 60;
+
+    if (differenceInHours < 24) {
+      return formatDistanceToNow(createdAt, { addSuffix: true });
+    } else {
+      return format(createdAt, "MM/dd/yyyy");
+    }
+  };
   return (
     <Paper
       sx={{
@@ -46,7 +59,7 @@ const Message = ({ message }) => {
             Anonymous
           </Typography>
           <Typography variant="caption" sx={{ color: "#666" }}>
-            {message.timestamp}
+            {formatDate()}
           </Typography>
         </Box>
       </Box>
@@ -54,7 +67,7 @@ const Message = ({ message }) => {
         variant="body1"
         sx={{ color: "#333", fontWeight: "500", mb: 1.5 }}
       >
-        {message.content} {/* Message ask in bold */}
+        {message} {/* Message ask in bold */}
       </Typography>
       <Divider sx={{ mb: 1 }} />
       <Box

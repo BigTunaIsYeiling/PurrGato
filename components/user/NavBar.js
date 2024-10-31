@@ -9,6 +9,7 @@ import {
   Divider,
   Avatar,
   ListItemIcon,
+  Badge,
 } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,7 +20,7 @@ import Logo from "@/app/logo.png"; // Adjust this path if necessary
 import UserDialog from "@/components/ChangeUserSettings";
 import { IoIosLogOut } from "react-icons/io";
 import { IoShareOutline } from "react-icons/io5";
-export default function NavBar({ avatar, isTwitter, username, id }) {
+export default function NavBar({ avatar, isTwitter, username, id, messages }) {
   const router = useRouter();
   const pathname = usePathname();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -179,7 +180,7 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
               >
                 <VscAccount size={24} />
               </IconButton>
-            </Link>
+            </Link>{" "}
             <Link href="/messages" passHref>
               <IconButton
                 sx={{
@@ -187,7 +188,17 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
                   transition: "color 0.3s",
                 }}
               >
-                <VscMail size={24} />
+                <Badge
+                  badgeContent={messages}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      backgroundColor: "rgb(247,152,18)",
+                      color: "white",
+                    },
+                  }}
+                >
+                  <VscMail size={24} />
+                </Badge>
               </IconButton>
             </Link>
             <Link href="/notifications" passHref>
@@ -259,7 +270,17 @@ export default function NavBar({ avatar, isTwitter, username, id }) {
                   transition: "color 0.3s",
                 }}
               >
-                <VscMail size={24} />
+                <Badge
+                  badgeContent={messages}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      backgroundColor: "rgb(247,152,18)",
+                      color: "white",
+                    },
+                  }}
+                >
+                  <VscMail size={24} />
+                </Badge>
               </IconButton>
             </Link>
             <Link href="/notifications" passHref>
