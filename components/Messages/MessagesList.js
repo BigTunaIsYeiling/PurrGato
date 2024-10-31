@@ -4,7 +4,7 @@ import Message from "./Message";
 const MessageList = ({ data }) => {
   return (
     <Box>
-      {data.length != 0 &&
+      {data.length != 0 ? (
         data.map((msg, index) => (
           <Message
             key={msg._id}
@@ -12,8 +12,10 @@ const MessageList = ({ data }) => {
             date={msg.createdAt}
             id={msg._id}
           />
-        ))}
-      <Typography variant="h6">No Messages For Now</Typography>
+        ))
+      ) : (
+        <Typography variant="h6">No Messages For Now</Typography>
+      )}
     </Box>
   );
 };
