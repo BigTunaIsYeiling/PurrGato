@@ -87,7 +87,7 @@ const Message = ({ message, date, id }) => {
           alignItems: "center",
         }}
       >
-        <ReplyComponent />
+        <ReplyComponent content={message} />
         <IconButton sx={{ color: "#555" }} onClick={DeleteMessage}>
           <AiOutlineDelete size={20} />
         </IconButton>

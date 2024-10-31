@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import {
   Button,
@@ -103,7 +103,17 @@ export default function ReplyComponent({ content, id }) {
           </IconButton>
         </Box>
         <Box sx={{ p: 3 }}>
-          <Box>jdakwdjawkdjak</Box>
+          <Typography
+            variant="body1"
+            sx={{
+              color: "#333",
+              fontWeight: "500",
+              mb: 1.5,
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            {content}
+          </Typography>
           <Divider sx={{ mt: 3 }} />
           <Box sx={{ width: "100%", maxWidth: 600 }}>
             <TextField
