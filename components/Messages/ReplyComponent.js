@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 import { mutate } from "swr";
+import toast from "react-hot-toast";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
@@ -56,7 +57,7 @@ export default function ReplyComponent({ content, id }) {
       return handleClose();
     }
     const resData = await response.json();
-    return console.log(resData);
+    return toast.error(resData.error);
   };
   const handleTextChange = (e) => {
     const value = e.target.value;
