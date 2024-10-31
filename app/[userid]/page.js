@@ -33,6 +33,7 @@ const GlassButton = styled(Button)({
 const UserProfile = ({ params }) => {
   const { userid } = use(params);
   const [message, setMessage] = useState("");
+  const [direction, setDirection] = useState("ltr");
   const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`
   );
@@ -66,6 +67,18 @@ const UserProfile = ({ params }) => {
       return setMessage("");
     } else {
       return toast.error(data.error);
+    }
+  };
+  const handleTextChange = (e) => {
+    const value = e.target.value;
+    setMessage(value);
+
+    // Set direction based on input language
+    if (/[\u0600-\u06FF]/.test(value)) {
+      // Arabic Unicode range
+      setDirection("rtl");
+    } else {
+      setDirection("ltr");
     }
   };
   return (
@@ -107,7 +120,7 @@ const UserProfile = ({ params }) => {
             multiline
             rows={2.8}
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={handleTextChange}
             variant="outlined"
             slotProps={{
               inputLabel: {
@@ -142,6 +155,7 @@ const UserProfile = ({ params }) => {
                   display: "none", // Hide scrollbar
                 },
               },
+              direction: direction,
             }}
           />
         </Box>

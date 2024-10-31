@@ -32,6 +32,7 @@ const GlassButton = styled(Button)({
 export default function ReplyComponent({ content, id }) {
   const [open, setOpen] = useState(false);
   const [replyText, setReplyText] = useState("");
+  const [direction, setDirection] = useState("ltr");
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const handleOpen = () => {
@@ -42,7 +43,18 @@ export default function ReplyComponent({ content, id }) {
     console.log("Reply text:", replyText);
     handleClose();
   };
+  const handleTextChange = (e) => {
+    const value = e.target.value;
+    setReplyText(value);
 
+    // Set direction based on input language
+    if (/[\u0600-\u06FF]/.test(value)) {
+      // Arabic Unicode range
+      setDirection("rtl");
+    } else {
+      setDirection("ltr");
+    }
+  };
   return (
     <>
       <GlassButton onClick={handleOpen}>Reply</GlassButton>
@@ -121,7 +133,7 @@ export default function ReplyComponent({ content, id }) {
               multiline
               rows={6}
               value={replyText}
-              onChange={(e) => setReplyText(e.target.value)}
+              onChange={handleTextChange}
               variant="outlined"
               slotProps={{
                 inputLabel: {
@@ -153,6 +165,7 @@ export default function ReplyComponent({ content, id }) {
                     display: "none", // Hide scrollbar
                   },
                 },
+                direction: direction,
               }}
             />
           </Box>

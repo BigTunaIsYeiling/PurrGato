@@ -7,10 +7,10 @@ const MessageList = ({ data }) => {
       {data.length != 0 ? (
         data.map((msg, index) => (
           <Message
-            key={msg._id}
+            key={msg.id}
             message={msg.content}
             date={msg.createdAt}
-            id={msg._id}
+            id={msg.id}
           />
         ))
       ) : (
