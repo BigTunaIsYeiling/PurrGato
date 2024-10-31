@@ -4,7 +4,7 @@ import Message from "./Message";
 const MessageList = ({ data }) => {
   return (
     <Box>
-      {data.length > 1 &&
+      {data.length != 0 &&
         data.map((msg, index) => (
           <Message
             key={msg._id}
