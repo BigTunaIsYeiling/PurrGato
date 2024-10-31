@@ -115,6 +115,7 @@ const UserProfile = ({ params }) => {
               },
             }}
             sx={{
+              whiteSpace: "pre-wrap",
               mt: 3,
               width: "100%",
               borderRadius: "25px",

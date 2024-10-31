@@ -82,7 +82,12 @@ const Message = ({ message, date, id }) => {
       </Box>
       <Typography
         variant="body1"
-        sx={{ color: "#333", fontWeight: "500", mb: 1.5 }}
+        sx={{
+          color: "#333",
+          fontWeight: "500",
+          mb: 1.5,
+          whiteSpace: "pre-wrap",
+        }}
       >
         {message} {/* Message ask in bold */}
       </Typography>
