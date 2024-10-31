@@ -2,106 +2,10 @@
 import { Box, Typography } from "@mui/material";
 import { Answer } from "./Answer";
 import { useState } from "react";
-
-const Answers = () => {
+import LoadingScreen from "../LoadingScreen";
+import useSWR from "swr";
+const Answers = ({ userId }) => {
   const [answerData, setAnswersData] = useState([
-    // Sample data, remove or replace with your data fetching logic
-    {
-      date: "2023-08-01",
-      ask: "What is your favorite hobby?",
-      answer: "I love painting and exploring nature.",
-      userAvatar: "https://i.pravatar.cc/150?img=11",
-      userName: "Anonymous",
-      likes: 15,
-    },
-    {
-      date: "2023-07-15",
-      ask: "How do you manage your time?",
-      answer: "I use time-blocking and prioritize my tasks daily.",
-      userAvatar: "https://i.pravatar.cc/150?img=12",
-      userName: "Anonymous",
-      likes: 8,
-    },
-    {
-      date: "2023-08-01",
-      ask: "What is your favorite hobby?",
-      answer: "I love painting and exploring nature.",
-      userAvatar: "https://i.pravatar.cc/150?img=11",
-      userName: "Anonymous",
-      likes: 15,
-    },
-    {
-      date: "2023-07-15",
-      ask: "How do you manage your time?",
-      answer: "I use time-blocking and prioritize my tasks daily.",
-      userAvatar: "https://i.pravatar.cc/150?img=12",
-      userName: "Anonymous",
-      likes: 8,
-    },
-    {
-      date: "2023-08-01",
-      ask: "What is your favorite hobby?",
-      answer: "I love painting and exploring nature.",
-      userAvatar: "https://i.pravatar.cc/150?img=11",
-      userName: "Anonymous",
-      likes: 15,
-    },
-    {
-      date: "2023-07-15",
-      ask: "How do you manage your time?",
-      answer: "I use time-blocking and prioritize my tasks daily.",
-      userAvatar: "https://i.pravatar.cc/150?img=12",
-      userName: "Anonymous",
-      likes: 8,
-    },
-    {
-      date: "2023-08-01",
-      ask: "What is your favorite hobby?",
-      answer: "I love painting and exploring nature.",
-      userAvatar: "https://i.pravatar.cc/150?img=11",
-      userName: "Anonymous",
-      likes: 15,
-    },
-    {
-      date: "2023-07-15",
-      ask: "How do you manage your time?",
-      answer: "I use time-blocking and prioritize my tasks daily.",
-      userAvatar: "https://i.pravatar.cc/150?img=12",
-      userName: "Anonymous",
-      likes: 8,
-    },
-    {
-      date: "2023-08-01",
-      ask: "What is your favorite hobby?",
-      answer: "I love painting and exploring nature.",
-      userAvatar: "https://i.pravatar.cc/150?img=11",
-      userName: "Anonymous",
-      likes: 15,
-    },
-    {
-      date: "2023-07-15",
-      ask: "How do you manage your time?",
-      answer: "I use time-blocking and prioritize my tasks daily.",
-      userAvatar: "https://i.pravatar.cc/150?img=12",
-      userName: "Anonymous",
-      likes: 8,
-    },
-    {
-      date: "2023-08-01",
-      ask: "What is your favorite hobby?",
-      answer: "I love painting and exploring nature.",
-      userAvatar: "https://i.pravatar.cc/150?img=11",
-      userName: "Anonymous",
-      likes: 15,
-    },
-    {
-      date: "2023-07-15",
-      ask: "How do you manage your time?",
-      answer: "I use time-blocking and prioritize my tasks daily.",
-      userAvatar: "https://i.pravatar.cc/150?img=12",
-      userName: "Anonymous",
-      likes: 8,
-    },
     {
       date: "2023-08-01",
       ask: "What is your favorite hobby?",
@@ -135,7 +39,14 @@ const Answers = () => {
       likes: 8,
     },
   ]);
-
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/post/${userId}`
+  );
+  if (isLoading) return <LoadingScreen />;
+  if (!data || error) {
+    return <Typography variant="h6">Messages not found</Typography>;
+  }
+  console.log(data);
   return (
     <>
       <Box sx={{ width: "100%", maxWidth: 600, textAlign: "left" }}>

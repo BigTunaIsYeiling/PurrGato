@@ -118,7 +118,7 @@ const UserProfile = ({ params }) => {
           <TextField
             placeholder="Send Anonymous Message"
             multiline
-            rows={2.8}
+            rows={4}
             value={message}
             onChange={handleTextChange}
             variant="outlined"
@@ -134,7 +134,6 @@ const UserProfile = ({ params }) => {
               borderRadius: "25px",
               backgroundColor: "#FFFFFF",
               padding: "10px 15px",
-              paddingBottom: "35px",
               boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
               overflow: "hidden",
               border: "1px solid rgba(255, 255, 255, 0.3)", // Glass effect border
@@ -168,7 +167,7 @@ const UserProfile = ({ params }) => {
             Send
           </GlassButton>
         </Box>
-        <Answers />
+        <Answers userId={data.id} />
       </Box>
     </UserLayout>
   );

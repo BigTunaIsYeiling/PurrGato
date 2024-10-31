@@ -12,6 +12,7 @@ import {
   Divider,
 } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
+import { mutate } from "swr";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
@@ -39,9 +40,23 @@ export default function ReplyComponent({ content, id }) {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-  const handleReply = () => {
-    console.log("Reply text:", replyText);
-    handleClose();
+  const handleReply = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ PostBody: replyText, messageId: id }),
+      credentials: "include",
+    });
+    if (response.ok) {
+      mutate(`${process.env.NEXT_PUBLIC_API_URL}/message`);
+      mutate(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
+      setReplyText("");
+      return handleClose();
+    }
+    const resData = await response.json();
+    return console.log(resData);
   };
   const handleTextChange = (e) => {
     const value = e.target.value;
@@ -171,7 +186,7 @@ export default function ReplyComponent({ content, id }) {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
-          <GlassButton type="submit">Send</GlassButton>
+          <GlassButton onClick={handleReply}>Send</GlassButton>
         </Box>
       </Dialog>
     </>
