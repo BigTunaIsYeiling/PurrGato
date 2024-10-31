@@ -35,10 +35,33 @@ const UserProfile = ({ params }) => {
   const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`
   );
-  if (isLoading) return <LoadingScreen />;
+  const {
+    data: userdata,
+    error: guest,
+    isLoading: loadpage,
+  } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
+  if (isLoading || loadpage) return <LoadingScreen />;
   if (!data || error) {
     return <Typography variant="h6">User not found</Typography>;
   }
+  const SendMessageRequest = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/message/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: message,
+          senderId: guest ? null : userdata.id,
+          receiverId: userid,
+        }),
+      }
+    );
+    const data = await response.json();
+    return console.log(data);
+  };
   return (
     <UserLayout>
       <Box
@@ -80,16 +103,20 @@ const UserProfile = ({ params }) => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             variant="outlined"
-            InputLabelProps={{ shrink: false }}
+            slotProps={{
+              inputLabel: {
+                shrink: false,
+              },
+            }}
             sx={{
               mt: 3,
               width: "100%",
               borderRadius: "25px",
-              backgroundColor: "#FFFFFF", // Frosted glass background
+              backgroundColor: "#FFFFFF",
               padding: "10px 15px",
-              paddingBottom: "35px", // Prevent text from overlapping button
+              paddingBottom: "35px",
               boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-              overflow: "hidden", // Remove scrollbar
+              overflow: "hidden",
               border: "1px solid rgba(255, 255, 255, 0.3)", // Glass effect border
               backdropFilter: "blur(10px)", // Frosted glass effect
               "& .MuiOutlinedInput-root": {
@@ -112,7 +139,11 @@ const UserProfile = ({ params }) => {
           />
         </Box>
         <Box sx={{ width: "100%", maxWidth: 600 }}>
-          <GlassButton disabled={message == ""} sx={{ width: "100%" }}>
+          <GlassButton
+            disabled={message == ""}
+            onClick={SendMessageRequest}
+            sx={{ width: "100%" }}
+          >
             Send
           </GlassButton>
         </Box>

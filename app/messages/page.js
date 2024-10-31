@@ -1,7 +1,15 @@
+"use client";
 import MessageList from "@/components/Messages/MessagesList";
 import UserLayout from "@/components/UserLayout";
 import { Box, Typography, Container } from "@mui/material";
+import useSWR from "swr";
 const MessagesPage = () => {
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/message`
+  );
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
+  console.log(data);
   return (
     <UserLayout>
       <Container>
