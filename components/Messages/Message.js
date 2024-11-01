@@ -13,7 +13,7 @@ import Image from "next/image";
 import { format, formatDistanceToNow } from "date-fns";
 import { mutate } from "swr";
 import ReplyComponent from "./ReplyComponent";
-const Message = ({ message, date, id }) => {
+const Message = ({ message, date, id, post }) => {
   const createdAt = new Date(date);
 
   const formatDate = () => {
@@ -66,6 +66,11 @@ const Message = ({ message, date, id }) => {
           <Typography variant="caption" sx={{ color: "#666" }}>
             {formatDate()}
           </Typography>
+          {post && (
+            <Typography variant="caption" sx={{ color: "#666" }}>
+              {"Related to"} {post}
+            </Typography>
+          )}
         </Box>
       </Box>
       <Typography
