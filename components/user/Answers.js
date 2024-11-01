@@ -16,7 +16,7 @@ const Answers = ({ userId, avatar, username, currentUser }) => {
     <>
       <Box sx={{ width: "100%", maxWidth: 600, textAlign: "left" }}>
         <Typography sx={{ mt: 4, mb: 2, fontSize: "17px", fontWeight: "500" }}>
-          Answers  {data.length}
+          Answers {data.length}
         </Typography>
       </Box>
       <Box sx={{ width: "100%", maxWidth: 600 }}>

@@ -15,6 +15,7 @@ import { BsReplyAll } from "react-icons/bs";
 import { useState } from "react";
 import { mutate } from "swr";
 import toast from "react-hot-toast";
+import ReAsk from "./ReAsk";
 export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   // Open delete menu
@@ -85,7 +86,7 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
         position: "relative", // To position delete dots on top-right
       }}
     >
-      {post.author == userid && (
+      {useridPosts == userid && (
         <>
           <IconButton
             aria-label="delete"
@@ -121,7 +122,7 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
               </Box>
             </MenuItem>
             <Divider />
-            <MenuItem>
+            <MenuItem onClick={DeletePost}>
               <Typography variant="body2" color="error">
                 Delete
               </Typography>
@@ -202,9 +203,12 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
             {post.likes.length}
           </Typography>
         </IconButton>
-        <IconButton aria-label="reply" sx={{ color: "#6A6A6A" }}>
-          <BsReplyAll />
-        </IconButton>
+        <ReAsk
+          messagehead={post.answer}
+          senderid={userid}
+          receiverid={useridPosts}
+          postid={post.postId}
+        />
       </Box>
     </Box>
   );
