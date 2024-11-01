@@ -10,6 +10,7 @@ const MessagesPage = () => {
   );
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <LoadingScreen />;
+  console.log(data);
   return (
     <UserLayout>
       <Container>

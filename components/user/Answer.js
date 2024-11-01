@@ -206,7 +206,7 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
           messagehead={post.answer}
           senderid={userid}
           receiverid={useridPosts}
-          postid={post.postId}
+          postId={post.postId}
         />
       </Box>
     </Box>

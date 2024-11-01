@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsReplyAll } from "react-icons/bs";
-import { mutate } from "swr";
 import toast from "react-hot-toast";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
@@ -32,7 +31,7 @@ const GlassButton = styled(Button)({
   },
 });
 
-export default function ReAsk({ messagehead, senderid, receiverid, postid }) {
+export default function ReAsk({ messagehead, senderid, receiverid, postId }) {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -41,8 +40,30 @@ export default function ReAsk({ messagehead, senderid, receiverid, postid }) {
   };
   const handleClose = () => setOpen(false);
   const [bodymessage, setmessagebody] = useState("");
-  const handleTextDisplay = () => {
-    console.log({ content: messagehead, senderid, receiverid, postid });
+  const SendMessageRequest = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/message/reply`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: bodymessage,
+          senderId: senderid,
+          receiverId: receiverid,
+          postId,
+        }),
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
+      toast.success("Message sent successfully");
+      setmessagebody("");
+      return handleClose();
+    } else {
+      return toast.error(data.error);
+    }
   };
   return (
     <>
@@ -166,7 +187,7 @@ export default function ReAsk({ messagehead, senderid, receiverid, postid }) {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
-          <GlassButton onClick={handleTextDisplay}>Send</GlassButton>
+          <GlassButton onClick={SendMessageRequest}>Send</GlassButton>
         </Box>
       </Dialog>
     </>
