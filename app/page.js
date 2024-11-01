@@ -141,7 +141,7 @@ export default function Home() {
                             fontWeight: 500,
                           }}
                         >
-                          0 answers
+                          {user.answers} answer{user.answers !== 1 && "s"}
                         </Typography>
                         {" — "}
                         <Typography

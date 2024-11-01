@@ -167,7 +167,12 @@ const UserProfile = ({ params }) => {
             Send
           </GlassButton>
         </Box>
-        <Answers userId={data.id} />
+        <Answers
+          userId={data.id}
+          avatar={data.avatar}
+          username={data.username}
+          currentUser={userdata.id}
+        />
       </Box>
     </UserLayout>
   );

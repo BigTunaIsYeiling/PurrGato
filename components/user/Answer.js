@@ -8,25 +8,15 @@ import {
   Avatar,
   Typography,
 } from "@mui/material";
-import { format } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
 import { BsReplyAll } from "react-icons/bs";
 import { useState } from "react";
-export const Answer = ({ answer, setAnswers }) => {
+import { mutate } from "swr";
+import toast from "react-hot-toast";
+export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [liked, setLiked] = useState(false);
-  // Handle like toggle
-  const handleLikeToggle = async () => {
-    setLiked(!liked);
-    setAnswers((prevAnswers) => {
-      return prevAnswers.map((a) =>
-        a.ask === answer.ask
-          ? { ...a, likes: liked ? a.likes - 1 : a.likes + 1 }
-          : a
-      );
-    });
-  };
   // Open delete menu
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -35,14 +25,38 @@ export const Answer = ({ answer, setAnswers }) => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-  // Handle delete action
-  const handleDelete = () => {
-    setAnswers((prevAnswers) =>
-      prevAnswers.filter((a) => a.ask !== answer.ask)
-    );
-    handleMenuClose();
-  };
+  const createdAt = new Date(post.createdAt);
+  const formatDate = () => {
+    const now = new Date();
+    const differenceInHours = (now - createdAt) / 1000 / 60 / 60;
 
+    if (differenceInHours < 24) {
+      return formatDistanceToNow(createdAt, { addSuffix: true });
+    } else {
+      return format(createdAt, "MM/dd/yyyy");
+    }
+  };
+  const LikePost = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/post/like`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postId: post.postId,
+        }),
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
+      mutate(`${process.env.NEXT_PUBLIC_API_URL}/post/${useridPosts}`);
+    } else {
+      return toast.error(data.error);
+    }
+  };
   return (
     <Box
       sx={{
@@ -92,21 +106,31 @@ export const Answer = ({ answer, setAnswers }) => {
           </Box>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleDelete}>
+        <MenuItem>
           <Typography variant="body2" color="error">
             Delete
           </Typography>
         </MenuItem>
       </Menu>
       {/* The Ask */}
-      <Typography variant="h6" sx={{ fontWeight: 500, color: "black" }}>
-        {answer.ask}
+      <Typography
+        variant="body1"
+        sx={{
+          fontWeight: 500,
+          color: "black",
+          whiteSpace: "pre-wrap",
+          "&.MuiTypography-h6": {
+            lineHeight: 1,
+          },
+        }}
+      >
+        {post.ask}
       </Typography>
       {/* Avatar and User Info */}
       <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
         <Avatar
-          src={answer.userAvatar}
-          alt={answer.userName}
+          src={avatar}
+          alt={username}
           sx={{ width: 40, height: 40, border: "2px solid #fdecd2" }}
         />
         <Box sx={{ ml: 2 }}>
@@ -114,20 +138,23 @@ export const Answer = ({ answer, setAnswers }) => {
             variant="body2"
             sx={{ color: "#6A6A6A", fontWeight: 500 }}
           >
-            {answer.userName}
+            {username}
           </Typography>
           <Typography
             variant="caption"
             color="textSecondary"
             sx={{ fontWeight: 500 }}
           >
-            {format(new Date(answer.date), "MMM dd, yyyy")}
+            {formatDate()}
           </Typography>
         </Box>
       </Box>
       {/* The Answer */}
-      <Typography variant="body1" sx={{ mt: 1, color: "black" }}>
-        {answer.answer}
+      <Typography
+        variant="body1"
+        sx={{ my: 2, color: "black", whiteSpace: "pre-wrap" }}
+      >
+        {post.answer}
       </Typography>
       <Divider sx={{ mt: 2, mb: 2 }} />
       {/* Icons for Heart React and Reply */}
@@ -142,20 +169,17 @@ export const Answer = ({ answer, setAnswers }) => {
         {/* Heart Icon Toggle */}
         <IconButton
           aria-label="like"
-          onClick={handleLikeToggle}
-          sx={{ color: liked ? "red" : "#6A6A6A" }}
+          sx={{ color: post.likes.includes(userid) ? "red" : "#6A6A6A" }}
+          onClick={LikePost}
         >
-          {liked ? <FaHeart /> : <FaRegHeart />}
+          {post.likes.includes(userid) ? <FaHeart /> : <FaRegHeart />}
           <Typography variant="body2" color="black" sx={{ ml: 1 }}>
-            {answer.likes}
+            {post.likes.length}
           </Typography>
         </IconButton>
-        {/* End of Heart Icon Toggle */}
-        {/* Reply Icon */}
         <IconButton aria-label="reply" sx={{ color: "#6A6A6A" }}>
           <BsReplyAll />
         </IconButton>
-        {/* End of Reply Icon */}
       </Box>
     </Box>
   );
