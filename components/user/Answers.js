@@ -19,8 +19,8 @@ const Answers = ({ userId, avatar, username, currentUser }) => {
         </Typography>
       </Box>
       <Box sx={{ width: "100%", maxWidth: 600 }}>
-        {Array.isArray(data) && data.length > 0 ? (
-          data.map((post, index) => (
+        {Array.isArray(data.PostsData) && data.PostsData.length > 0 ? (
+          data.PostsData.map((post, index) => (
             <Answer
               key={post.postId}
               post={post}
