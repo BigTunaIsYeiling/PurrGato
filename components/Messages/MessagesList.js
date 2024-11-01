@@ -12,6 +12,7 @@ const MessageList = ({ data }) => {
             date={msg.createdAt}
             id={msg.id}
             post={msg.post}
+            parentPost={msg.parentPost}
           />
         ))
       ) : (

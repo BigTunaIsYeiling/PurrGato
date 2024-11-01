@@ -6,6 +6,7 @@ import {
   IconButton,
   Avatar,
   Divider,
+  Stack,
 } from "@mui/material";
 import { AiOutlineDelete } from "react-icons/ai";
 import anon from "@/app/anon.png";
@@ -13,7 +14,8 @@ import Image from "next/image";
 import { format, formatDistanceToNow } from "date-fns";
 import { mutate } from "swr";
 import ReplyComponent from "./ReplyComponent";
-const Message = ({ message, date, id, post }) => {
+import ReplyOnPost from "./ReplyonPost";
+const Message = ({ message, date, id, post, parentPost }) => {
   const createdAt = new Date(date);
 
   const formatDate = () => {
@@ -59,7 +61,7 @@ const Message = ({ message, date, id, post }) => {
         <Avatar sx={{ width: 40, height: 40, mr: 2 }}>
           <Image src={anon} alt="Anonymous" width={40} height={40} />
         </Avatar>
-        <Box>
+        <Stack direction={"column"}>
           <Typography variant="body2" sx={{ fontWeight: 600, color: "#333" }}>
             Anonymous
           </Typography>
@@ -68,10 +70,13 @@ const Message = ({ message, date, id, post }) => {
           </Typography>
           {post && (
             <Typography variant="caption" sx={{ color: "#666" }}>
-              {"Related to"} {post}
+              {"Related to "}
+              <Box component={"span"} sx={{ fontWeight: 600 }}>
+                {post}
+              </Box>
             </Typography>
           )}
-        </Box>
+        </Stack>
       </Box>
       <Typography
         variant="body1"
@@ -92,7 +97,11 @@ const Message = ({ message, date, id, post }) => {
           alignItems: "center",
         }}
       >
-        <ReplyComponent content={message} id={id} />
+        {!post ? (
+          <ReplyComponent content={message} id={id} />
+        ) : (
+          <ReplyOnPost content={message} id={id} parentpost={parentPost} />
+        )}
         <IconButton sx={{ color: "#555" }} onClick={DeleteMessage}>
           <AiOutlineDelete size={20} />
         </IconButton>

@@ -11,6 +11,7 @@ const Answers = ({ userId, avatar, username, currentUser }) => {
   if (!data || error) {
     return <Typography variant="h6">Messages not found</Typography>;
   }
+  console.log(data);
   return (
     <>
       <Box sx={{ width: "100%", maxWidth: 600, textAlign: "left" }}>
