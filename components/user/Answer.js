@@ -122,6 +122,8 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
           "&.MuiTypography-h6": {
             lineHeight: 1,
           },
+          direction: "rtl",
+          textAlign: "left",
         }}
       >
         {post.ask}
@@ -152,7 +154,13 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
       {/* The Answer */}
       <Typography
         variant="body1"
-        sx={{ my: 2, color: "black", whiteSpace: "pre-wrap" }}
+        sx={{
+          my: 2,
+          color: "black",
+          whiteSpace: "pre-wrap",
+          direction: "rtl",
+          textAlign: "left",
+        }}
       >
         {post.answer}
       </Typography>
