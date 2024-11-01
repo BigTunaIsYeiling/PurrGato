@@ -40,6 +40,8 @@ export default function ReAsk({ messagehead, senderid, receiverid, postId }) {
   };
   const handleClose = () => setOpen(false);
   const [bodymessage, setmessagebody] = useState("");
+
+  
   const SendMessageRequest = async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/message/reply`,

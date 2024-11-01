@@ -11,12 +11,11 @@ const Answers = ({ userId, avatar, username, currentUser }) => {
   if (!data || error) {
     return <Typography variant="h6">Messages not found</Typography>;
   }
-  console.log(data);
   return (
     <>
       <Box sx={{ width: "100%", maxWidth: 600, textAlign: "left" }}>
         <Typography sx={{ mt: 4, mb: 2, fontSize: "17px", fontWeight: "500" }}>
-          Answers {data.length}
+          Answers {data.AllAnswers}
         </Typography>
       </Box>
       <Box sx={{ width: "100%", maxWidth: 600 }}>
