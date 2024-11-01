@@ -57,6 +57,21 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
       return toast.error(data.error);
     }
   };
+  const DeletePost = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/post/${post.postId}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
+      mutate(`${process.env.NEXT_PUBLIC_API_URL}/post/${useridPosts}`);
+    } else {
+      return toast.error(data.error);
+    }
+  };
   return (
     <Box
       sx={{
@@ -70,48 +85,50 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
         position: "relative", // To position delete dots on top-right
       }}
     >
-      {/* Three dots for delete option */}
-      <IconButton
-        aria-label="delete"
-        onClick={handleMenuClick}
-        sx={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          color: "#6A6A6A", // Neutral color for the dots
-        }}
-      >
-        <PiDotsThreeOutlineLight />
-      </IconButton>
-      {/* Menu for delete with glass effect */}
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-        PaperProps={{
-          sx: {
-            backgroundColor: "rgba(255, 255, 255, 0.25)", // Semi-transparent background
-            backdropFilter: "blur(10px)", // Frosted glass effect
-            borderRadius: 2,
-            border: "1px solid rgba(255, 255, 255, 0.18)",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)", // Glass-like shadow
-            p: 1,
-            width: 170, // Adjust width to match
-          },
-        }}
-      >
-        <MenuItem>
-          <Box sx={{ backdropFilter: "blur(10px)", borderRadius: 1 }}>
-            <Typography variant="body2">Share</Typography>
-          </Box>
-        </MenuItem>
-        <Divider />
-        <MenuItem>
-          <Typography variant="body2" color="error">
-            Delete
-          </Typography>
-        </MenuItem>
-      </Menu>
+      {post.author == userid && (
+        <>
+          <IconButton
+            aria-label="delete"
+            onClick={handleMenuClick}
+            sx={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              color: "#6A6A6A", // Neutral color for the dots
+            }}
+          >
+            <PiDotsThreeOutlineLight />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            PaperProps={{
+              sx: {
+                backgroundColor: "rgba(255, 255, 255, 0.25)", // Semi-transparent background
+                backdropFilter: "blur(10px)", // Frosted glass effect
+                borderRadius: 2,
+                border: "1px solid rgba(255, 255, 255, 0.18)",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)", // Glass-like shadow
+                p: 1,
+                width: 170, // Adjust width to match
+              },
+            }}
+          >
+            <MenuItem>
+              <Box sx={{ backdropFilter: "blur(10px)", borderRadius: 1 }}>
+                <Typography variant="body2">Share</Typography>
+              </Box>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <Typography variant="body2" color="error">
+                Delete
+              </Typography>
+            </MenuItem>
+          </Menu>
+        </>
+      )}
       {/* The Ask */}
       <Typography
         variant="body1"
