@@ -20,7 +20,14 @@ import Logo from "@/app/logo.png"; // Adjust this path if necessary
 import UserDialog from "@/components/ChangeUserSettings";
 import { IoIosLogOut } from "react-icons/io";
 import { IoShareOutline } from "react-icons/io5";
-export default function NavBar({ avatar, isTwitter, username, id, messages }) {
+export default function NavBar({
+  avatar,
+  isTwitter,
+  username,
+  id,
+  messages,
+  notifications,
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -209,7 +216,17 @@ export default function NavBar({ avatar, isTwitter, username, id, messages }) {
                   transition: "color 0.3s",
                 }}
               >
-                <VscBell size={24} />
+                <Badge
+                  badgeContent={notifications}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      backgroundColor: "rgb(247,152,18)",
+                      color: "white",
+                    },
+                  }}
+                >
+                  <VscBell size={24} />
+                </Badge>
               </IconButton>
             </Link>
           </Box>
@@ -291,7 +308,17 @@ export default function NavBar({ avatar, isTwitter, username, id, messages }) {
                   transition: "color 0.3s",
                 }}
               >
-                <VscBell size={24} />
+                <Badge
+                  badgeContent={notifications}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      backgroundColor: "rgb(247,152,18)",
+                      color: "white",
+                    },
+                  }}
+                >
+                  <VscBell size={24} />
+                </Badge>
               </IconButton>
             </Link>
             <IconButton

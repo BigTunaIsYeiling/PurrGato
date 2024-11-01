@@ -27,6 +27,7 @@ const UserLayout = ({ children }) => {
           username={data.username}
           id={data.id}
           messages={data.messages}
+          notifications={data.notifications}
         />
       )}
       <Box
