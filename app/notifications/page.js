@@ -1,8 +1,15 @@
+"use client";
+import LoadingScreen from "@/components/LoadingScreen";
 import NotificationList from "@/components/Notifications/NotificationList";
 import UserLayout from "@/components/UserLayout";
 import { Box, Typography, Container } from "@mui/material";
-
+import useSWR from "swr";
 const NotificationsPage = () => {
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/note`
+  );
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <LoadingScreen />;
   return (
     <UserLayout>
       <Container>
@@ -13,7 +20,7 @@ const NotificationsPage = () => {
           >
             Notifications
           </Typography>
-          <NotificationList />
+          <NotificationList data={data} />
         </Box>
       </Container>
     </UserLayout>

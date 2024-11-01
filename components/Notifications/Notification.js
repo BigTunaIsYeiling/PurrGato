@@ -12,6 +12,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { IoMdHeart } from "react-icons/io";
 import { RiQuestionAnswerFill } from "react-icons/ri";
 import styled from "@emotion/styled";
+import { format, formatDistanceToNow } from "date-fns";
 
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
@@ -31,6 +32,18 @@ const GlassButton = styled(Button)({
 });
 
 const Notification = ({ notification }) => {
+  const createdAt = new Date(notification.createdAt);
+
+  const formatDate = () => {
+    const now = new Date();
+    const differenceInHours = (now - createdAt) / 1000 / 60 / 60;
+
+    if (differenceInHours < 24) {
+      return formatDistanceToNow(createdAt, { addSuffix: true });
+    } else {
+      return format(createdAt, "MM/dd/yyyy");
+    }
+  };
   return (
     <Paper
       sx={{
@@ -53,7 +66,7 @@ const Notification = ({ notification }) => {
       >
         <Box sx={{ position: "relative", display: "inline-flex" }}>
           <Avatar
-            src="https://i.pravatar.cc/150?img=anonymous" // Placeholder for anon photo
+            src={notification.fromUser.avatar} // Placeholder for anon photo
             alt="Anonymous"
             sx={{ width: 60, height: 60, mr: 2 }} // Adjust avatar size
           />
@@ -95,9 +108,13 @@ const Notification = ({ notification }) => {
         <Box>
           <Typography variant="body2" sx={{ fontWeight: 600, color: "#333" }}>
             {notification.content}
+            {notification.type === "reply" &&
+              `${notification.fromUser.username} replied to your message '${notification.message.title}'`}
+            {notification.type === "like" &&
+              `${notification.fromUser.username} Liked your post '${notification.post.title}'`}
           </Typography>
           <Typography variant="caption" sx={{ color: "#666" }}>
-            {notification.timestamp}
+            {formatDate()}
           </Typography>
         </Box>
       </Box>
@@ -110,7 +127,7 @@ const Notification = ({ notification }) => {
         }}
       >
         <GlassButton
-          href={notification.link} // Link to the answer
+          // href={notification.link} // Link to the answer
           sx={{ textDecoration: "none" }}
         >
           View
