@@ -138,6 +138,12 @@ export default function ReplyComponent({ content, id }) {
               fontWeight: "500",
               mb: 1.5,
               whiteSpace: "pre-wrap",
+              textAlign: /^[\u0600-\u06FF]/.test(content.trim())
+                ? "end"
+                : "start",
+              direction: /^[\u0600-\u06FF]/.test(content.trim())
+                ? "rtl"
+                : "ltr",
             }}
           >
             {content}
