@@ -1,6 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { Button, Box, Typography, Container, IconButton } from "@mui/material";
+import {
+  Button,
+  Box,
+  Typography,
+  Container,
+  IconButton,
+  Divider,
+} from "@mui/material";
 import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
@@ -166,16 +173,13 @@ const Login = () => {
           Log In with Twitter
         </GlassButton>
       </Box>
+      <Divider sx={{ my: { xs: 3, md: 4 } }} />
       <Typography variant="body2" mt={{ xs: 3, md: 4 }}>
         Don&apos;t have an account?{" "}
-        <Box
-          sx={{ textDecoration: "none", color: "#FFBA6D" }}
-          component={Link}
-          href="/register/signup"
-        >
-          Sign Up
-        </Box>
       </Typography>
+      <GlassButton component={Link} href="/register/signup">
+        sign up
+      </GlassButton>
     </Container>
   );
 };
