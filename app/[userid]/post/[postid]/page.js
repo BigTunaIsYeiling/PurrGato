@@ -15,7 +15,6 @@ export default function PostOnePosts({ params }) {
     error,
     isLoading,
   } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/post/p/${postid}`);
-
   const { data: userData, isLoading: userLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/`
   );
@@ -37,6 +36,7 @@ export default function PostOnePosts({ params }) {
             userid={userData ? userData.id : null}
             useridPosts={userid}
             isSubAnswer={post.isSubAnswer}
+            postParam={postid}
           />
         ))
       ) : (

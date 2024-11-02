@@ -22,6 +22,7 @@ export const SubAnswer = ({
   userid,
   useridPosts,
   isSubAnswer,
+  postParam,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   // Open delete menu
@@ -59,7 +60,7 @@ export const SubAnswer = ({
     );
     const data = await response.json();
     if (response.ok) {
-      mutate(`${process.env.NEXT_PUBLIC_API_URL}/post/${useridPosts}`);
+      mutate(`${process.env.NEXT_PUBLIC_API_URL}/post/p/${postParam}`);
     } else {
       return toast.error(data.error);
     }
@@ -74,7 +75,7 @@ export const SubAnswer = ({
     );
     const data = await response.json();
     if (response.ok) {
-      mutate(`${process.env.NEXT_PUBLIC_API_URL}/post/${useridPosts}`);
+      mutate(`${process.env.NEXT_PUBLIC_API_URL}/post/p/${postParam}`);
     } else {
       return toast.error(data.error);
     }
