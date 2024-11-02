@@ -7,7 +7,6 @@ import { use } from "react";
 
 const Answers = ({ params }) => {
   const { userid } = use(params);
-
   const {
     data: postData,
     error: postError,

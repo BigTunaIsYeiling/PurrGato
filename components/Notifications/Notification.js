@@ -13,6 +13,7 @@ import { IoMdHeart } from "react-icons/io";
 import { RiQuestionAnswerFill } from "react-icons/ri";
 import styled from "@emotion/styled";
 import { format, formatDistanceToNow } from "date-fns";
+import { useRouter } from "next/navigation";
 
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
@@ -32,6 +33,7 @@ const GlassButton = styled(Button)({
 });
 
 const Notification = ({ notification }) => {
+  const router = useRouter();
   const createdAt = new Date(notification.createdAt);
 
   const formatDate = () => {
@@ -129,6 +131,7 @@ const Notification = ({ notification }) => {
         <GlassButton
           // href={notification.link} // Link to the answer
           sx={{ textDecoration: "none" }}
+          onClick={() => router.push(notification.notLink)}
         >
           View
         </GlassButton>
