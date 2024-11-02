@@ -71,7 +71,7 @@ export default function ReplyOnPost({ content, id, parentpost }) {
     setReplyText(value);
 
     // Set direction based on input language
-    if (/[\u0600-\u06FF]/.test(value)) {
+    if (/[\u0600-\u06FF]/.test(value.trim().charAt(0))) {
       // Arabic Unicode range
       setDirection("rtl");
     } else {
