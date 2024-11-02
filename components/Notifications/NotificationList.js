@@ -1,5 +1,5 @@
 "use client";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Notification from "./Notification";
 import useSWR, { mutate } from "swr";
 const NotificationList = ({ data }) => {
@@ -10,9 +10,13 @@ const NotificationList = ({ data }) => {
   if (notificationsreq) mutate(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
   return (
     <Box>
-      {data.map((notif, index) => (
-        <Notification key={notif.id} notification={notif} />
-      ))}
+      {data.length != 0 ? (
+        data.map((notif, index) => (
+          <Notification key={notif.id} notification={notif} />
+        ))
+      ) : (
+        <Typography variant="h6">No Notifications For Now</Typography>
+      )}
     </Box>
   );
 };

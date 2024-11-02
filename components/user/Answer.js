@@ -7,6 +7,7 @@ import {
   MenuItem,
   Avatar,
   Typography,
+  ListItemIcon,
 } from "@mui/material";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -16,6 +17,8 @@ import { mutate } from "swr";
 import toast from "react-hot-toast";
 import ReAsk from "./ReAsk";
 import { SubAnswer } from "./SubAnswer";
+import { IoShareOutline } from "react-icons/io5";
+import { AiOutlineDelete } from "react-icons/ai";
 export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   // Open delete menu
@@ -117,16 +120,25 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
                 },
               }}
             >
-              <MenuItem>
-                <Box sx={{ backdropFilter: "blur(10px)", borderRadius: 1 }}>
-                  <Typography variant="body2">Share</Typography>
-                </Box>
+              <MenuItem
+                sx={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <Typography variant="body2">Share</Typography>
+                <ListItemIcon>
+                  <IoShareOutline size={18} />
+                </ListItemIcon>
               </MenuItem>
               <Divider />
-              <MenuItem onClick={DeletePost}>
+              <MenuItem
+                onClick={DeletePost}
+                sx={{ display: "flex", justifyContent: "space-between" }}
+              >
                 <Typography variant="body2" color="error">
                   Delete
                 </Typography>
+                <ListItemIcon>
+                  <AiOutlineDelete size={18} color="#d32f2f" />
+                </ListItemIcon>
               </MenuItem>
             </Menu>
           </>

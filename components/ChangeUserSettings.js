@@ -96,16 +96,16 @@ export default function UserDialog({ isTwitter, username, avatar, id }) {
         onClick={handleClickOpen}
       >
         <Stack direction={"column"}>
-          <Typography>
+          <Typography variant="body2">
             {username.slice(0, 9)}
             {username.length > 9 && ".."}
           </Typography>
-          <Typography color="#777">
+          <Typography color="#777" variant="body2">
             {isTwitter ? "Twitter User" : "PurrGato User"}
           </Typography>
         </Stack>
         <ListItemIcon>
-          <CiSettings size={20} />
+          <CiSettings size={18} />
         </ListItemIcon>
       </MenuItem>
       <Dialog
@@ -113,32 +113,12 @@ export default function UserDialog({ isTwitter, username, avatar, id }) {
         onClose={handleClose}
         PaperProps={{
           sx: {
-            background: "linear-gradient(180deg, #f8f4f0, #fdecd2)", // Gradient background
+            background: "#FFFCF2", // Gradient background
             borderRadius: { xs: "10px", sm: "10px" },
             padding: "10px",
             height: { xs: "100%", sm: "auto" }, // Full height on small screens, auto on larger
             width: { xs: "100%", sm: 500 }, // Full width on small screens, 600px on larger
             overflowX: "hidden",
-            "&::-webkit-scrollbar": { width: "15px" },
-            "&::-webkit-scrollbar-track": { backgroundColor: "white" },
-            "&::-webkit-scrollbar-thumb": {
-              backgroundColor: "#FCE3CD",
-            },
-            "&::-webkit-scrollbar-button": {
-              backgroundColor: "#FCE3CD" /* Background of the buttons */,
-              width: "15px",
-              height: "10px",
-            },
-            "&::-webkit-scrollbar-button:single-button:decrement": {
-              backgroundImage:
-                'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8l8 8H4z"/></svg>\')',
-              backgroundSize: "15px 10px" /* Adjust size to fit the button */,
-            },
-            "&::-webkit-scrollbar-button:single-button:increment": {
-              backgroundImage:
-                'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 16l-8-8h16z"/></svg>\')',
-              backgroundSize: "15px 10px" /* Adjust size to fit the button */,
-            },
           },
         }}
         component={"form"}

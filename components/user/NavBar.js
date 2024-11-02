@@ -109,9 +109,9 @@ export default function NavBar({
           sx={{ display: "flex", justifyContent: "space-between" }}
           onClick={() => CopyShareProfile(id)}
         >
-          <Typography>Share profile</Typography>
+          <Typography variant="body2">Share profile</Typography>
           <ListItemIcon>
-            <IoShareOutline size={20} />
+            <IoShareOutline size={18} />
           </ListItemIcon>
         </MenuItem>
         <Divider />
@@ -119,9 +119,11 @@ export default function NavBar({
           onClick={handleLogout}
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Box color="#d32f2f">Sign out</Box>
+          <Typography variant="body2" color="#d32f2f">
+            Sign out
+          </Typography>
           <ListItemIcon>
-            <IoIosLogOut size={20} color="#d32f2f" />
+            <IoIosLogOut size={18} color="#d32f2f" />
           </ListItemIcon>
         </MenuItem>
       </Menu>

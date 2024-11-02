@@ -6,19 +6,14 @@ import {
   InputAdornment,
   Typography,
   List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Avatar,
 } from "@mui/material";
 import { VscSearch } from "react-icons/vsc";
 import UserLayout from "@/components/UserLayout";
 import useSWR from "swr";
-import { useRouter } from "next/navigation";
 import LoadingScreen from "@/components/LoadingScreen";
+import ListItemUser from "@/components/ListItemUser";
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
-  const router = useRouter();
   const { data, error, isLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/users`
   );
@@ -82,10 +77,10 @@ export default function Home() {
               sm: "52vh",
             },
             overflowY: "auto",
-            "&::-webkit-scrollbar": { width: "8px" },
+            "&::-webkit-scrollbar": { width: "6px" },
             "&::-webkit-scrollbar-track": { backgroundColor: "#f6eee6" },
             "&::-webkit-scrollbar-thumb": {
-              backgroundColor: "#FCE3CD",
+              backgroundColor: "#f0c080",
               borderRadius: "6px",
             },
           }}
@@ -96,66 +91,8 @@ export default function Home() {
             </Typography>
           ) : (
             <List>
-              {filteredUsers.map((user) => (
-                <ListItem
-                  alignItems="flex-start"
-                  key={user.id}
-                  sx={{
-                    cursor: "pointer",
-                    mb: 1,
-                    p: 1,
-                  }}
-                  onClick={() => {
-                    router.push(`/${user.id}`);
-                  }}
-                >
-                  <ListItemAvatar>
-                    <Avatar
-                      alt={user.username}
-                      src={user.avatar}
-                      sx={{ width: 40, height: 40 }}
-                    />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontWeight: 500,
-                          fontSize: "17px",
-                          color: "text.primary",
-                        }}
-                      >
-                        {user.username}
-                      </Typography>
-                    }
-                    secondary={
-                      <React.Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          sx={{
-                            fontSize: "15px",
-                            display: "inline",
-                            color: "black",
-                            fontWeight: 500,
-                          }}
-                        >
-                          {user.answers} answer{user.answers !== 1 && "s"}
-                        </Typography>
-                        {" — "}
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          sx={{ fontSize: "15px", color: "text.secondary" }}
-                        >
-                          {user.bio.slice(0, 55)}
-                          {user.bio.length > 55 && ".."}
-                        </Typography>
-                      </React.Fragment>
-                    }
-                  />
-                </ListItem>
+              {filteredUsers.map((user, i) => (
+                <ListItemUser key={user.id} user={user} />
               ))}
             </List>
           )}
