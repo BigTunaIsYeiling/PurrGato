@@ -19,5 +19,5 @@ export async function generateMetadata({ params }) {
 }
 
 export default function Layouy({ params, children }) {
-  return <UserProfile children={children} params={params} />;
+  return <UserProfile params={params}>{children}</UserProfile>;
 }
