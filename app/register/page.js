@@ -173,9 +173,9 @@ const Login = () => {
           Log In with Twitter
         </GlassButton>
       </Box>
-      <Divider sx={{ my: { xs: 3, md: 4 } }} />
-      <Typography variant="body2" mt={{ xs: 3, md: 4 }}>
-        Don&apos;t have an account?{" "}
+      <Divider sx={{ mt: 4, mb: 2 }} />
+      <Typography variant="body2" mb={2}>
+        Don&apos;t have an account?
       </Typography>
       <GlassButton component={Link} href="/register/signup">
         sign up
