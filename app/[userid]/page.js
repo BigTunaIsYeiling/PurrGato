@@ -6,6 +6,9 @@ import { Answer } from "@/components/user/Answer";
 import { use } from "react";
 const Answers = ({ params }) => {
   const { userid } = use(params);
+  const { data, error, isLoading } = useSWR(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`
+  );
   const {
     data: postData,
     error: postError,
@@ -16,7 +19,7 @@ const Answers = ({ params }) => {
     `${process.env.NEXT_PUBLIC_API_URL}/user/`
   );
 
-  if (postLoading || userLoading) return <LoadingScreen />;
+  if (postLoading || userLoading || isLoading) return <LoadingScreen />;
 
   if (!postData || postError) {
     return <Typography variant="h6">Messages not found</Typography>;
@@ -36,8 +39,8 @@ const Answers = ({ params }) => {
               post={post}
               userid={userData ? userData.id : null}
               useridPosts={userid}
-              avatar={post.avatar}
-              username={post.username}
+              avatar={data.avatar}
+              username={data.username}
             />
           ))
         ) : (

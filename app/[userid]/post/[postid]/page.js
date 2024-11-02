@@ -6,6 +6,11 @@ import useSWR from "swr";
 export default function PostOnePosts({ params }) {
   const { userid, postid } = use(params);
   const {
+    data,
+    error: userError,
+    isLoading: userDataLoading,
+  } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`);
+  const {
     data: posts,
     error,
     isLoading,
@@ -14,7 +19,7 @@ export default function PostOnePosts({ params }) {
   const { data: userData, isLoading: userLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/`
   );
-  if (isLoading || userLoading) {
+  if (isLoading || userLoading || userDataLoading) {
     return <div>Loading...</div>;
   }
   if (error) {
@@ -27,8 +32,8 @@ export default function PostOnePosts({ params }) {
           <SubAnswer
             key={post.postId}
             post={post}
-            avatar={post.avatar}
-            username={post.username}
+            avatar={data.avatar}
+            username={data.username}
             userid={userData ? userData.id : null}
             useridPosts={userid}
             isSubAnswer={post.isSubAnswer}
