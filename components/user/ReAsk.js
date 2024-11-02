@@ -40,8 +40,7 @@ export default function ReAsk({ messagehead, senderid, receiverid, postId }) {
   };
   const handleClose = () => setOpen(false);
   const [bodymessage, setmessagebody] = useState("");
-
-  
+  const [direction, setDirection] = useState("ltr");
   const SendMessageRequest = async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/message/reply`,
@@ -65,6 +64,18 @@ export default function ReAsk({ messagehead, senderid, receiverid, postId }) {
       return handleClose();
     } else {
       return toast.error(data.error);
+    }
+  };
+  const handleTextChange = (e) => {
+    const value = e.target.value;
+    setmessagebody(value);
+
+    // Set direction based on input language
+    if (/[\u0600-\u06FF]/.test(value.trim().charAt(0))) {
+      // Arabic Unicode range
+      setDirection("rtl");
+    } else {
+      setDirection("ltr");
     }
   };
   return (
@@ -140,6 +151,12 @@ export default function ReAsk({ messagehead, senderid, receiverid, postId }) {
               fontWeight: "500",
               mb: 1.5,
               whiteSpace: "pre-wrap",
+              textAlign: /^[\u0600-\u06FF]/.test(messagehead.trim())
+                ? "end"
+                : "start",
+              direction: /^[\u0600-\u06FF]/.test(messagehead.trim())
+                ? "rtl"
+                : "ltr",
             }}
           >
             {messagehead}
@@ -151,7 +168,7 @@ export default function ReAsk({ messagehead, senderid, receiverid, postId }) {
               multiline
               rows={6}
               value={bodymessage}
-              onChange={(e) => setmessagebody(e.target.value)}
+              onChange={handleTextChange}
               variant="outlined"
               slotProps={{
                 inputLabel: {
@@ -183,7 +200,7 @@ export default function ReAsk({ messagehead, senderid, receiverid, postId }) {
                     display: "none", // Hide scrollbar
                   },
                 },
-                // direction: direction,
+                direction: direction,
               }}
             />
           </Box>
