@@ -19,6 +19,7 @@ import { TbCameraMinus } from "react-icons/tb";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { mutate } from "swr";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
@@ -36,7 +37,11 @@ const GlassButton = styled(Button)({
 
 export default function UserDialog({ isTwitter, username, avatar, id }) {
   const [open, setOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -231,11 +236,11 @@ export default function UserDialog({ isTwitter, username, avatar, id }) {
             />
           </Box>
           {!isTwitter && (
-            <Box sx={{ mb: 2 }}>
+            <Box sx={{ position: "relative" }} mb={2}>
               <TextField
                 variant="outlined"
                 placeholder="New Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 InputProps={{
                   sx: {
                     borderRadius: "25px",
@@ -254,6 +259,18 @@ export default function UserDialog({ isTwitter, username, avatar, id }) {
                 autoComplete="new-password"
                 onKeyDown={(e) => e.stopPropagation()}
               />
+              <IconButton
+                onClick={togglePasswordVisibility}
+                sx={{
+                  position: "absolute",
+                  right: "12px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "black",
+                }}
+              >
+                {showPassword ? <BsEyeSlash /> : <BsEye />}
+              </IconButton>
             </Box>
           )}
           <Divider sx={{ my: 3 }} />

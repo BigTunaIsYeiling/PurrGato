@@ -14,6 +14,7 @@ import { RiQuestionAnswerFill } from "react-icons/ri";
 import styled from "@emotion/styled";
 import { format, formatDistanceToNow } from "date-fns";
 import { useRouter } from "next/navigation";
+import { mutate } from "swr";
 
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
@@ -44,6 +45,21 @@ const Notification = ({ notification }) => {
       return formatDistanceToNow(createdAt, { addSuffix: true });
     } else {
       return format(createdAt, "MM/dd/yyyy");
+    }
+  };
+  const handleDelete = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/note/${notification.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    if (response.ok) {
+      return mutate(`${process.env.NEXT_PUBLIC_API_URL}/note`);
     }
   };
   return (
@@ -135,7 +151,7 @@ const Notification = ({ notification }) => {
         >
           View
         </GlassButton>
-        <IconButton sx={{ color: "#333" }}>
+        <IconButton sx={{ color: "#333" }} onClick={handleDelete}>
           <AiOutlineDelete size={20} />
         </IconButton>
       </Box>
