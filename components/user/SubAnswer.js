@@ -79,7 +79,6 @@ export const SubAnswer = ({
       return toast.error(data.error);
     }
   };
-
   return (
     <Box
       sx={{

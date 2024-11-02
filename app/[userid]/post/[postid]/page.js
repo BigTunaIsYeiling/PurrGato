@@ -1,5 +1,4 @@
 "use client";
-import { Answer } from "@/components/user/Answer";
 import { SubAnswer } from "@/components/user/SubAnswer";
 import { Box, Typography } from "@mui/material";
 import { use } from "react";

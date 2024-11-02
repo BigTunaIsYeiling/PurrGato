@@ -11,7 +11,7 @@ const Answers = ({ params }) => {
     error: postError,
     isLoading: postLoading,
   } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/post/${userid}`);
-  
+
   const { data: userData, isLoading: userLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/`
   );
@@ -21,7 +21,6 @@ const Answers = ({ params }) => {
   if (!postData || postError) {
     return <Typography variant="h6">Messages not found</Typography>;
   }
-
   return (
     <>
       <Box sx={{ width: "100%", maxWidth: 600, textAlign: "left" }}>
