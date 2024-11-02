@@ -160,8 +160,8 @@ export const SubAnswer = ({
           "&.MuiTypography-h6": {
             lineHeight: 1,
           },
-          direction: "rtl",
-          textAlign: "left",
+          textAlign: /^[\u0600-\u06FF]/.test(post.ask.trim()) ? "end" : "start",
+          direction: /^[\u0600-\u06FF]/.test(post.ask.trim()) ? "rtl" : "ltr",
         }}
       >
         {post.ask}
@@ -196,9 +196,13 @@ export const SubAnswer = ({
           my: 2,
           color: "black",
           whiteSpace: "pre-wrap",
-          fontSize: isSubAnswer ? "0.9rem" : "1rem", // Slightly smaller font for sub-answers
-          direction: "rtl",
-          textAlign: "left",
+          fontSize: isSubAnswer ? "0.9rem" : "1rem",
+          textAlign: /^[\u0600-\u06FF]/.test(post.answer.trim())
+            ? "end"
+            : "start",
+          direction: /^[\u0600-\u06FF]/.test(post.answer.trim())
+            ? "rtl"
+            : "ltr",
         }}
       >
         {post.answer}

@@ -152,8 +152,10 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
             "&.MuiTypography-h6": {
               lineHeight: 1,
             },
-            direction: "rtl",
-            textAlign: "left",
+            textAlign: /^[\u0600-\u06FF]/.test(post.ask.trim())
+              ? "end"
+              : "start",
+            direction: /^[\u0600-\u06FF]/.test(post.ask.trim()) ? "rtl" : "ltr",
           }}
         >
           {post.ask}
@@ -188,8 +190,12 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
             my: 2,
             color: "black",
             whiteSpace: "pre-wrap",
-            direction: "rtl",
-            textAlign: "left",
+            textAlign: /^[\u0600-\u06FF]/.test(post.answer.trim())
+              ? "end"
+              : "start",
+            direction: /^[\u0600-\u06FF]/.test(post.answer.trim())
+              ? "rtl"
+              : "ltr",
           }}
         >
           {post.answer}
