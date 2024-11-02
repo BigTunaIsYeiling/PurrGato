@@ -7,6 +7,7 @@ import {
   MenuItem,
   Avatar,
   Typography,
+  ListItemIcon,
 } from "@mui/material";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -15,6 +16,8 @@ import { useState } from "react";
 import { mutate } from "swr";
 import toast from "react-hot-toast";
 import ReAsk from "./ReAsk";
+import { IoShareOutline } from "react-icons/io5";
+import { AiOutlineDelete } from "react-icons/ai";
 export const SubAnswer = ({
   post,
   avatar,
@@ -116,26 +119,33 @@ export const SubAnswer = ({
             onClose={handleMenuClose}
             PaperProps={{
               sx: {
-                backgroundColor: "rgba(255, 255, 255, 0.25)",
-                backdropFilter: "blur(10px)",
+                backgroundColor: "rgba(255, 255, 255, 0.25)", // Semi-transparent background
+                backdropFilter: "blur(10px)", // Frosted glass effect
                 borderRadius: 2,
                 border: "1px solid rgba(255, 255, 255, 0.18)",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)", // Glass-like shadow
                 p: 1,
-                width: 170,
+                width: 170, // Adjust width to match
               },
             }}
           >
-            <MenuItem>
-              <Box sx={{ backdropFilter: "blur(10px)", borderRadius: 1 }}>
-                <Typography variant="body2">Share</Typography>
-              </Box>
+            <MenuItem sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography variant="body2">Share</Typography>
+              <ListItemIcon>
+                <IoShareOutline size={18} />
+              </ListItemIcon>
             </MenuItem>
             <Divider />
-            <MenuItem onClick={DeletePost}>
+            <MenuItem
+              onClick={DeletePost}
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
               <Typography variant="body2" color="error">
                 Delete
               </Typography>
+              <ListItemIcon>
+                <AiOutlineDelete size={18} color="#d32f2f" />
+              </ListItemIcon>
             </MenuItem>
           </Menu>
         </>

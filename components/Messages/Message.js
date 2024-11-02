@@ -85,10 +85,13 @@ const Message = ({ message, date, id, post, parentPost }) => {
           fontWeight: "500",
           mb: 1.5,
           whiteSpace: "pre-wrap",
+          textAlign: /^[\u0600-\u06FF]/.test(message.trim()) ? "end" : "start",
+          direction: /^[\u0600-\u06FF]/.test(message.trim()) ? "rtl" : "ltr",
         }}
       >
         {message}
       </Typography>
+
       <Divider sx={{ mb: 1 }} />
       <Box
         sx={{

@@ -22,7 +22,7 @@ export default function PostOnePosts({ params }) {
     return <div>Loading...</div>;
   }
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <Box my={2}>Posts Not Found</Box>;
   }
   return (
     <Box sx={{ width: "100%", maxWidth: 600 }}>
