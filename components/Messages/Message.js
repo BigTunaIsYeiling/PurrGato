@@ -72,7 +72,8 @@ const Message = ({ message, date, id, post, parentPost }) => {
             <Typography variant="caption" sx={{ color: "#666" }}>
               {"Related to "}
               <Box component={"span"} sx={{ fontWeight: 600 }}>
-                {post}
+                {post.slice(0, 50)}
+                {post.length > 50 ? "..." : ""}
               </Box>
             </Typography>
           )}
