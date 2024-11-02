@@ -16,7 +16,6 @@ import { useState } from "react";
 import { mutate } from "swr";
 import toast from "react-hot-toast";
 import ReAsk from "./ReAsk";
-import { SubAnswer } from "./SubAnswer";
 import { IoShareOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
 export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
@@ -224,22 +223,6 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
           />
         </Box>
       </Box>
-      {/* Replies Section */}
-      {post.replies && post.replies.length > 0 && (
-        <Box sx={{ mt: 3, pl: 4 }}>
-          {post.replies.map((reply) => (
-            <SubAnswer
-              key={reply.postId}
-              post={reply}
-              avatar={avatar} // Optional: you might want a different avatar for each user
-              username={username} // Optional: should be replaced with reply's username
-              userid={userid}
-              useridPosts={useridPosts}
-              isSubAnswer={true} // Mark this as a sub-answer
-            />
-          ))}
-        </Box>
-      )}
     </Box>
   );
 };

@@ -4,7 +4,6 @@ import useSWR from "swr";
 import LoadingScreen from "@/components/LoadingScreen";
 import { Answer } from "@/components/user/Answer";
 import { use } from "react";
-
 const Answers = ({ params }) => {
   const { userid } = use(params);
   const {
@@ -12,7 +11,7 @@ const Answers = ({ params }) => {
     error: postError,
     isLoading: postLoading,
   } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/post/${userid}`);
-
+  
   const { data: userData, isLoading: userLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/`
   );
