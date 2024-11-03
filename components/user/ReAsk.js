@@ -11,9 +11,9 @@ import {
   useTheme,
   Divider,
 } from "@mui/material";
-import { AiOutlineClose } from "react-icons/ai";
-import { BsReplyAll } from "react-icons/bs";
 import toast from "react-hot-toast";
+import { AiOutlineClose } from "react-icons/ai";
+import {BiSend } from "react-icons/bi";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
@@ -85,7 +85,7 @@ export default function ReAsk({ messagehead, senderid, receiverid, postId }) {
         sx={{ color: "#6A6A6A" }}
         onClick={handleOpen}
       >
-        <BsReplyAll />
+        <BiSend />
       </IconButton>
       <Dialog
         open={open}

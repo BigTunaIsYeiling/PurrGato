@@ -18,7 +18,7 @@ import { mutate } from "swr";
 import toast from "react-hot-toast";
 import ReAsk from "./ReAsk";
 import { IoShareOutline } from "react-icons/io5";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineNodeExpand } from "react-icons/ai";
 export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   // Open delete menu
@@ -178,56 +178,61 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
               postId={post.postId}
             />
           </Stack>
-          {useridPosts == userid && (
-            <>
-              <IconButton
-                aria-label="delete"
-                onClick={handleMenuClick}
-                sx={{
-                  color: "#6A6A6A",
-                }}
+          <IconButton
+            onClick={handleMenuClick}
+            sx={{
+              color: "#6A6A6A",
+            }}
+          >
+            <PiDotsThreeOutlineLight />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            PaperProps={{
+              sx: {
+                backgroundColor: "rgba(255, 255, 255, 0.25)", // Semi-transparent background
+                backdropFilter: "blur(10px)", // Frosted glass effect
+                borderRadius: 2,
+                border: "1px solid rgba(255, 255, 255, 0.18)",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)", // Glass-like shadow
+                p: 1,
+                width: 170, // Adjust width to match
+              },
+            }}
+          >
+            <MenuItem sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography variant="body2">Thread</Typography>
+              <ListItemIcon>
+                <AiOutlineNodeExpand size={18} />
+              </ListItemIcon>
+            </MenuItem>
+            {useridPosts == userid && (
+              <MenuItem
+                sx={{ display: "flex", justifyContent: "space-between" }}
               >
-                <PiDotsThreeOutlineLight />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
-                PaperProps={{
-                  sx: {
-                    backgroundColor: "rgba(255, 255, 255, 0.25)", // Semi-transparent background
-                    backdropFilter: "blur(10px)", // Frosted glass effect
-                    borderRadius: 2,
-                    border: "1px solid rgba(255, 255, 255, 0.18)",
-                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)", // Glass-like shadow
-                    p: 1,
-                    width: 170, // Adjust width to match
-                  },
-                }}
+                <Typography variant="body2">Share</Typography>
+                <ListItemIcon>
+                  <IoShareOutline size={18} />
+                </ListItemIcon>
+              </MenuItem>
+            )}
+            <Divider />
+            {useridPosts == userid && (
+              <MenuItem
+                onClick={DeletePost}
+                sx={{ display: "flex", justifyContent: "space-between" }}
               >
-                <MenuItem
-                  sx={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <Typography variant="body2">Share</Typography>
-                  <ListItemIcon>
-                    <IoShareOutline size={18} />
-                  </ListItemIcon>
-                </MenuItem>
-                <Divider />
-                <MenuItem
-                  onClick={DeletePost}
-                  sx={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <Typography variant="body2" color="error">
-                    Delete
-                  </Typography>
-                  <ListItemIcon>
-                    <AiOutlineDelete size={18} color="#d32f2f" />
-                  </ListItemIcon>
-                </MenuItem>
-              </Menu>
-            </>
-          )}
+                <Typography variant="body2" color="error">
+                  Delete
+                </Typography>
+                <ListItemIcon>
+                  <AiOutlineDelete size={18} color="#d32f2f" />
+                </ListItemIcon>
+              </MenuItem>
+            )}
+          </Menu>
         </Box>
       </Box>
     </Box>

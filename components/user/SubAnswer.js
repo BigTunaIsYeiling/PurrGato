@@ -8,6 +8,7 @@ import {
   Avatar,
   Typography,
   ListItemIcon,
+  Stack,
 } from "@mui/material";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -17,7 +18,7 @@ import { mutate } from "swr";
 import toast from "react-hot-toast";
 import ReAsk from "./ReAsk";
 import { IoShareOutline } from "react-icons/io5";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineNodeExpand } from "react-icons/ai";
 export const SubAnswer = ({
   post,
   avatar,
@@ -89,67 +90,16 @@ export const SubAnswer = ({
         mb: 3,
         p: 3,
         borderRadius: "20px",
-        background: isSubAnswer ? "#fffaf0" : "#fffcf2", // Slight color change for sub-answers
+        background: isSubAnswer ? "#fffaf0" : "#fffcf2",
         border: isSubAnswer
           ? "1px solid #fdecd2"
           : "1px solid rgba(255, 255, 255, 0.5)",
         backdropFilter: "blur(10px)",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         position: "relative",
-        ml: isSubAnswer ? 4 : 0, // Indentation for sub-answers
+        ml: isSubAnswer ? 4 : 0,
       }}
     >
-      {useridPosts == userid && (
-        <>
-          <IconButton
-            aria-label="delete"
-            onClick={handleMenuClick}
-            sx={{
-              position: "absolute",
-              top: "10px",
-              right: "10px",
-              color: "#6A6A6A",
-            }}
-          >
-            <PiDotsThreeOutlineLight />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-            PaperProps={{
-              sx: {
-                backgroundColor: "rgba(255, 255, 255, 0.25)", // Semi-transparent background
-                backdropFilter: "blur(10px)", // Frosted glass effect
-                borderRadius: 2,
-                border: "1px solid rgba(255, 255, 255, 0.18)",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)", // Glass-like shadow
-                p: 1,
-                width: 170, // Adjust width to match
-              },
-            }}
-          >
-            <MenuItem sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography variant="body2">Share</Typography>
-              <ListItemIcon>
-                <IoShareOutline size={18} />
-              </ListItemIcon>
-            </MenuItem>
-            <Divider />
-            <MenuItem
-              onClick={DeletePost}
-              sx={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Typography variant="body2" color="error">
-                Delete
-              </Typography>
-              <ListItemIcon>
-                <AiOutlineDelete size={18} color="#d32f2f" />
-              </ListItemIcon>
-            </MenuItem>
-          </Menu>
-        </>
-      )}
       {/* The Ask */}
       <Typography
         variant="body1"
@@ -217,23 +167,78 @@ export const SubAnswer = ({
           justifyContent: "space-between",
         }}
       >
-        {/* Heart Icon Toggle */}
+        <Stack direction="row" spacing={1} alignItems="center">
+          {/* Heart Icon Toggle */}
+          <IconButton
+            aria-label="like"
+            sx={{ color: post.likes.includes(userid) ? "red" : "#6A6A6A" }}
+            onClick={LikePost}
+          >
+            {post.likes.includes(userid) ? <FaHeart /> : <FaRegHeart />}
+            <Typography variant="body2" color="black" sx={{ ml: 1 }}>
+              {post.likes.length}
+            </Typography>
+          </IconButton>
+          <ReAsk
+            messagehead={post.answer}
+            senderid={userid}
+            receiverid={useridPosts}
+            postId={post.postId}
+          />
+        </Stack>
         <IconButton
-          aria-label="like"
-          sx={{ color: post.likes.includes(userid) ? "red" : "#6A6A6A" }}
-          onClick={LikePost}
+          onClick={handleMenuClick}
+          sx={{
+            color: "#6A6A6A",
+          }}
         >
-          {post.likes.includes(userid) ? <FaHeart /> : <FaRegHeart />}
-          <Typography variant="body2" color="black" sx={{ ml: 1 }}>
-            {post.likes.length}
-          </Typography>
+          <PiDotsThreeOutlineLight />
         </IconButton>
-        <ReAsk
-          messagehead={post.answer}
-          senderid={userid}
-          receiverid={useridPosts}
-          postId={post.postId}
-        />
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+          PaperProps={{
+            sx: {
+              backgroundColor: "rgba(255, 255, 255, 0.25)", // Semi-transparent background
+              backdropFilter: "blur(10px)", // Frosted glass effect
+              borderRadius: 2,
+              border: "1px solid rgba(255, 255, 255, 0.18)",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)", // Glass-like shadow
+              p: 1,
+              width: 170, // Adjust width to match
+            },
+          }}
+        >
+          <MenuItem sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography variant="body2">Thread</Typography>
+            <ListItemIcon>
+              <AiOutlineNodeExpand size={18} />
+            </ListItemIcon>
+          </MenuItem>
+          {useridPosts == userid && (
+            <MenuItem sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography variant="body2">Share</Typography>
+              <ListItemIcon>
+                <IoShareOutline size={18} />
+              </ListItemIcon>
+            </MenuItem>
+          )}
+          <Divider />
+          {useridPosts == userid && (
+            <MenuItem
+              onClick={DeletePost}
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <Typography variant="body2" color="error">
+                Delete
+              </Typography>
+              <ListItemIcon>
+                <AiOutlineDelete size={18} color="#d32f2f" />
+              </ListItemIcon>
+            </MenuItem>
+          )}
+        </Menu>
       </Box>
     </Box>
   );
