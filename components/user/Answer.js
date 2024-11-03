@@ -19,7 +19,9 @@ import toast from "react-hot-toast";
 import ReAsk from "./ReAsk";
 import { IoShareOutline } from "react-icons/io5";
 import { AiOutlineDelete, AiOutlineNodeExpand } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
   // Open delete menu
   const handleMenuClick = (event) => {
@@ -202,7 +204,14 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
               },
             }}
           >
-            <MenuItem sx={{ display: "flex", justifyContent: "space-between" }}>
+            <MenuItem
+              sx={{ display: "flex", justifyContent: "space-between" }}
+              disabled={post.isParentPost}
+              onClick={() => {
+                if (post.isParentPost) return;
+                router.push(`/${useridPosts}/post/${post.postId}`);
+              }}
+            >
               <Typography variant="body2">Thread</Typography>
               <ListItemIcon>
                 <AiOutlineNodeExpand size={18} />
