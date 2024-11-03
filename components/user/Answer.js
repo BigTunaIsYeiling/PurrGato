@@ -9,7 +9,6 @@ import {
   Typography,
   ListItemIcon,
   Stack,
-  Button,
 } from "@mui/material";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -20,21 +19,6 @@ import toast from "react-hot-toast";
 import ReAsk from "./ReAsk";
 import { IoShareOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
-import styled from "@emotion/styled";
-const GlassButton = styled(Button)({
-  background: "rgba(255, 255, 255, 0.25)",
-  backdropFilter: "blur(10px)",
-  border: "1px solid rgba(255, 255, 255, 0.3)",
-  borderRadius: "10px",
-  color: "black",
-  padding: "5px 10px",
-  textTransform: "none",
-  fontSize: "14px",
-  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  "&:hover": {
-    background: "rgba(255, 255, 255, 0.3)",
-  },
-});
 export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   // Open delete menu
@@ -106,33 +90,24 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
           position: "relative", // To position delete dots on top-right
         }}
       >
-        <Stack
-          direction={"row-reverse"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
+        {/* The Ask */}
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: 500,
+            color: "black",
+            whiteSpace: "pre-wrap",
+            "&.MuiTypography-h6": {
+              lineHeight: 1,
+            },
+            textAlign: /^[\u0600-\u06FF]/.test(post.ask.trim())
+              ? "end"
+              : "start",
+            direction: /^[\u0600-\u06FF]/.test(post.ask.trim()) ? "rtl" : "ltr",
+          }}
         >
-          <GlassButton>Show Thread</GlassButton>
-          {/* The Ask */}
-          <Typography
-            variant="body1"
-            sx={{
-              fontWeight: 500,
-              color: "black",
-              whiteSpace: "pre-wrap",
-              "&.MuiTypography-h6": {
-                lineHeight: 1,
-              },
-              textAlign: /^[\u0600-\u06FF]/.test(post.ask.trim())
-                ? "end"
-                : "start",
-              direction: /^[\u0600-\u06FF]/.test(post.ask.trim())
-                ? "rtl"
-                : "ltr",
-            }}
-          >
-            {post.ask}
-          </Typography>
-        </Stack>
+          {post.ask}
+        </Typography>
         {/* Avatar and User Info */}
         <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
           <Avatar
