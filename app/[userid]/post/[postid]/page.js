@@ -1,4 +1,5 @@
 "use client";
+import PostSkeleton from "@/components/Skeleton/PostSkeleton";
 import { SubAnswer } from "@/components/user/SubAnswer";
 import styled from "@emotion/styled";
 import { Box, Button, Divider, Typography } from "@mui/material";
@@ -39,7 +40,7 @@ export default function PostOnePosts({ params }) {
     `${process.env.NEXT_PUBLIC_API_URL}/user/`
   );
   if (isLoading || userLoading || userDataLoading) {
-    return <div>Loading...</div>;
+    return <PostSkeleton />;
   }
   if (error) {
     return <Box my={2}>{error.info?.message}</Box>;
@@ -53,7 +54,7 @@ export default function PostOnePosts({ params }) {
           onClick={() => {
             router.push(`/${userid}`);
           }}
-        > 
+        >
           View {data.username + "'s"} All Answers
         </GlassButton>
       </Box>

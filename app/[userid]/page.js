@@ -1,9 +1,9 @@
 "use client";
 import { Box, Typography } from "@mui/material";
 import useSWR from "swr";
-import LoadingScreen from "@/components/LoadingScreen";
 import { Answer } from "@/components/user/Answer";
 import { use } from "react";
+import PostSkeleton from "@/components/Skeleton/PostSkeleton";
 const Answers = ({ params }) => {
   const { userid } = use(params);
   const { data, error, isLoading } = useSWR(
@@ -19,7 +19,7 @@ const Answers = ({ params }) => {
     `${process.env.NEXT_PUBLIC_API_URL}/user/`
   );
 
-  if (postLoading || userLoading || isLoading) return <LoadingScreen />;
+  if (postLoading || userLoading || isLoading) return <PostSkeleton />;
 
   if (!postData || postError) {
     return <Typography variant="h6">Messages not found</Typography>;
