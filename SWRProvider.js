@@ -20,7 +20,7 @@ const SWRProvider = ({ children }) => {
           }
           return res.json();
         },
-        revalidateOnFocus: true,
+        revalidateOnFocus: false,
         revalidateOnReconnect: true,
         shouldRetryOnError: false,
         dedupingInterval: 10000,
