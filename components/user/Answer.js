@@ -218,7 +218,7 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
                 </ListItemIcon>
               </MenuItem>
             )}
-            <Divider />
+            {useridPosts == userid && <Divider />}
             {useridPosts == userid && (
               <MenuItem
                 onClick={DeletePost}

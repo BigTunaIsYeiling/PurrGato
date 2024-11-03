@@ -224,7 +224,7 @@ export const SubAnswer = ({
               </ListItemIcon>
             </MenuItem>
           )}
-          <Divider />
+          {useridPosts == userid && <Divider />}
           {useridPosts == userid && (
             <MenuItem
               onClick={DeletePost}
