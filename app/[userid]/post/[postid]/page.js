@@ -14,7 +14,7 @@ export default function PostOnePosts({ params }) {
     data: posts,
     error,
     isLoading,
-  } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/post/p/${postid}`);
+  } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/post/${userid}/p/${postid}`);
   const { data: userData, isLoading: userLoading } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/user/`
   );
@@ -22,7 +22,7 @@ export default function PostOnePosts({ params }) {
     return <div>Loading...</div>;
   }
   if (error) {
-    return <Box my={2}>Posts Not Found</Box>;
+    return <Box my={2}>{error.info?.message}</Box>;
   }
   return (
     <Box sx={{ width: "100%", maxWidth: 600 }}>

@@ -215,6 +215,7 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
             aria-label="like"
             sx={{ color: post.likes.includes(userid) ? "red" : "#6A6A6A" }}
             onClick={LikePost}
+            disabled={userid == null}
           >
             {post.likes.includes(userid) ? <FaHeart /> : <FaRegHeart />}
             <Typography variant="body2" color="black" sx={{ ml: 1 }}>
