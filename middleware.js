@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function middleware(request) {
   const token = request.cookies.get("token");
   if (!token) {
-    console.log("no token");
+    console.log(request.headers);
     return NextResponse.redirect(new URL("/register", request.url));
   }
 
