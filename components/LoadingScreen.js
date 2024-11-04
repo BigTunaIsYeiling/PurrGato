@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import animationData from "@/app/Animation.json";
 import Lottie from "lottie-react";
@@ -5,7 +6,7 @@ import Lottie from "lottie-react";
 const LoadingScreen = () => (
   <div
     style={{
-      position: "fixed",
+      position: "absolute",
       top: 0,
       left: 0,
       width: "100%",
