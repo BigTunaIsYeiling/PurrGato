@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Box,
   Divider,
@@ -21,17 +22,25 @@ import { IoShareOutline } from "react-icons/io5";
 import { AiOutlineNodeExpand } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import ConfirmDialog from "../Delete/DeletePost";
+
 export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
+
+  // Local states to handle like status and count
+  const [isLiked, setIsLiked] = useState(post.likes.includes(userid));
+  const [likesCount, setLikesCount] = useState(post.likes.length);
+
   // Open delete menu
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   // Close delete menu
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
   const createdAt = new Date(post.createdAt);
   const formatDate = () => {
     const now = new Date();
@@ -43,7 +52,13 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
       return format(createdAt, "MM/dd/yyyy");
     }
   };
+
   const LikePost = async () => {
+    // Optimistically update UI state
+    setIsLiked(!isLiked);
+    setLikesCount(isLiked ? likesCount - 1 : likesCount + 1);
+
+    // Update the backend
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/post/like`,
       {
@@ -57,13 +72,18 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
         credentials: "include",
       }
     );
-    const data = await response.json();
+
     if (response.ok) {
-      mutate(`${process.env.NEXT_PUBLIC_API_URL}/post/${useridPosts}`);
+      mutate(`${process.env.NEXT_PUBLIC_API_URL}/post/${useridPosts}`); // Revalidate on success
     } else {
-      return toast.error(data.error);
+      // Revert optimistic UI update if there's an error
+      setIsLiked(isLiked);
+      setLikesCount(isLiked ? likesCount : likesCount - 1);
+      const data = await response.json();
+      toast.error(data.error);
     }
   };
+
   return (
     <Box>
       <Box
@@ -71,11 +91,11 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
           mb: 3,
           p: 3,
           borderRadius: "20px",
-          background: "#fffcf2", // Frosted glass background
-          border: "1px solid rgba(255, 255, 255, 0.5)", // Glass effect border
-          backdropFilter: "blur(10px)", // Frosted glass effect
+          background: "#fffcf2",
+          border: "1px solid rgba(255, 255, 255, 0.5)",
+          backdropFilter: "blur(10px)",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          position: "relative", // To position delete dots on top-right
+          position: "relative",
         }}
       >
         {/* The Ask */}
@@ -96,6 +116,7 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
         >
           {post.ask}
         </Typography>
+
         {/* Avatar and User Info */}
         <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
           <Avatar
@@ -119,6 +140,7 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
             </Typography>
           </Box>
         </Box>
+
         {/* The Answer */}
         <Typography
           variant="body1"
@@ -136,7 +158,9 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
         >
           {post.answer}
         </Typography>
+
         <Divider sx={{ mt: 2, mb: 2 }} />
+
         {/* Icons for Heart React and Reply */}
         <Box
           sx={{
@@ -150,13 +174,13 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
             {/* Heart Icon Toggle */}
             <IconButton
               aria-label="like"
-              sx={{ color: post.likes.includes(userid) ? "red" : "#6A6A6A" }}
+              sx={{ color: isLiked ? "red" : "#6A6A6A" }}
               onClick={LikePost}
               disabled={userid == null}
             >
-              {post.likes.includes(userid) ? <FaHeart /> : <FaRegHeart />}
+              {isLiked ? <FaHeart /> : <FaRegHeart />}
               <Typography variant="body2" color="black" sx={{ ml: 1 }}>
-                {post.likes.length}
+                {likesCount}
               </Typography>
             </IconButton>
             <ReAsk
@@ -166,12 +190,8 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
               postId={post.postId}
             />
           </Stack>
-          <IconButton
-            onClick={handleMenuClick}
-            sx={{
-              color: "#6A6A6A",
-            }}
-          >
+
+          <IconButton onClick={handleMenuClick} sx={{ color: "#6A6A6A" }}>
             <PiDotsThreeOutlineLight />
           </IconButton>
           <Menu
@@ -180,13 +200,13 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
             onClose={handleMenuClose}
             PaperProps={{
               sx: {
-                backgroundColor: "rgba(255, 255, 255, 0.25)", // Semi-transparent background
-                backdropFilter: "blur(10px)", // Frosted glass effect
+                backgroundColor: "rgba(255, 255, 255, 0.25)",
+                backdropFilter: "blur(10px)",
                 borderRadius: 2,
                 border: "1px solid rgba(255, 255, 255, 0.18)",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)", // Glass-like shadow
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
                 p: 1,
-                width: 170, // Adjust width to match
+                width: 170,
               },
             }}
           >
