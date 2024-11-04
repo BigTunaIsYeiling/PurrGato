@@ -21,6 +21,7 @@ import { useState } from "react";
 import { mutate } from "swr";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import ConfirmDialog from "./user/UserConfirmDialog";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
   backdropFilter: "blur(10px)",
@@ -93,18 +94,6 @@ export default function UserDialog({ isTwitter, username, avatar, id }) {
       return data.errors.forEach((error) => {
         toast.error(error, { id: toastId });
       });
-    }
-  };
-  const handleDelete = async () => {
-    const toastId = toast.loading("Deleting...");
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
-      method: "DELETE",
-      credentials: "include",
-    });
-    if (response.ok) {
-      toast.success("User deleted successfully", { id: toastId });
-      handleClose();
-      return router.push("/register");
     }
   };
   return (
@@ -291,12 +280,7 @@ export default function UserDialog({ isTwitter, username, avatar, id }) {
             <GlassButton sx={{ mb: 2 }} disabled>
               Download Your Twitter Api
             </GlassButton>
-            <GlassButton
-              sx={{ color: "#FF6B6B", mb: 2 }}
-              onClick={handleDelete}
-            >
-              Delete Account
-            </GlassButton>
+            <ConfirmDialog />
           </Stack>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
