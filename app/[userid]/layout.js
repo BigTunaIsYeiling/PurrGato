@@ -18,6 +18,16 @@ export async function generateMetadata({ params }) {
   return { title: data.username };
 }
 
-export default function Layouy({ params, children }) {
-  return <UserProfile params={params}>{children}</UserProfile>;
+export default async function Layout({ params, children }) {
+  const userid = params.userid;
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`
+  );
+  const data = await res.json();
+
+  return (
+    <UserProfile userid={userid} data={data}>
+      {children}
+    </UserProfile>
+  );
 }

@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -29,22 +29,18 @@ const GlassButton = styled(Button)({
   marginBottom: "10px",
 });
 
-const UserProfile = ({ params, children }) => {
-  const { userid } = use(params);
+const UserProfile = ({ children, data, userid }) => {
   const [message, setMessage] = useState("");
   const [direction, setDirection] = useState("ltr");
-  const { data, error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`
-  );
   const {
     data: userdata,
     error: guest,
     isLoading: loadpage,
   } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
-  if (isLoading || loadpage) return <LoadingScreen />;
-  if (!data || error) {
+  if (!data) {
     return <Typography variant="h6">User not found</Typography>;
   }
+  if (loadpage) return <LoadingScreen />;
   const SendMessageRequest = async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/message/`,
