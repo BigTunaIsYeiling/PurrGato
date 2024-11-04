@@ -60,6 +60,7 @@ export default function UserDialog({ isTwitter, username, avatar, id }) {
   const [avatarFile, setAvatarFile] = useState(null);
   const [NewUsername, setUsername] = useState("");
   const [NewBio, setBio] = useState("");
+  const [direction, setDirection] = useState("ltr");
   const [NewPassword, setPassword] = useState("");
   const DisplayAvatar = (file) => {
     setRev(URL.createObjectURL(file));
@@ -94,6 +95,18 @@ export default function UserDialog({ isTwitter, username, avatar, id }) {
       return data.errors.forEach((error) => {
         toast.error(error, { id: toastId });
       });
+    }
+  };
+  const handleTextChange = (e) => {
+    const value = e.target.value;
+    setBio(value);
+
+    // Set direction based on input language
+    if (/[\u0600-\u06FF]/.test(value.trim().charAt(0))) {
+      // Arabic Unicode range
+      setDirection("rtl");
+    } else {
+      setDirection("ltr");
     }
   };
   return (
@@ -204,13 +217,14 @@ export default function UserDialog({ isTwitter, username, avatar, id }) {
                   "& .MuiOutlinedInput-notchedOutline": {
                     border: "none", // Remove border
                   },
+                  direction: direction,
                 },
               }}
               multiline
               rows={3}
               sx={{ width: "100%" }}
               value={NewBio}
-              onChange={(e) => setBio(e.target.value)}
+              onChange={handleTextChange}
               onKeyDown={(e) => e.stopPropagation()}
             />
           </Box>
