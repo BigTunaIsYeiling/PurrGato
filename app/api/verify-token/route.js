@@ -1,5 +1,5 @@
-import jsonwebtoken from 'jsonwebtoken';
-import { NextResponse } from 'next/server';
+import jsonwebtoken from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   const { token } = await req.json();
