@@ -8,11 +8,6 @@ const PostSkeleton = () => {
         sx={{
           mb: 3,
           p: 3,
-          borderRadius: "20px",
-          background: "#fffcf2",
-          border: "1px solid rgba(255, 255, 255, 0.5)",
-          backdropFilter: "blur(10px)",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           position: "relative",
         }}
       >
