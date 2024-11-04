@@ -88,7 +88,7 @@ export default function UserDialog({ isTwitter, username, avatar, id }) {
       toast.success("User updated successfully", { id: toastId });
       handleClose();
       mutate(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
-      mutate(`${process.env.NEXT_PUBLIC_API_URL}/user/one/${id}`);
+      router.refresh();
     } else {
       const data = await response.json();
       return data.errors.forEach((error) => {
