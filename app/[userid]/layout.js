@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Layout({ params, children }) {
-  const userid = params.userid;
+  const userid = (await params).userid;
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`
   );
