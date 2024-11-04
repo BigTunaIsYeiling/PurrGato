@@ -1,9 +1,11 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function middleware(request) {
-  const token = request.cookies.get("token");
+  const cookies = await cookies();
+  const token = null;
   if (!token) {
-    console.log(request.headers);
+    console.log(cookies);
     return NextResponse.redirect(new URL("/register", request.url));
   }
 
