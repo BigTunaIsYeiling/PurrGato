@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import ReAsk from "./ReAsk";
 import { IoShareOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
+import ConfirmDialog from "../Delete/DeleteSub";
 export const SubAnswer = ({
   post,
   avatar,
@@ -223,17 +224,7 @@ export const SubAnswer = ({
                 </ListItemIcon>
               </MenuItem>
               <Divider />
-              <MenuItem
-                onClick={DeletePost}
-                sx={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <Typography variant="body2" color="error">
-                  Delete
-                </Typography>
-                <ListItemIcon>
-                  <AiOutlineDelete size={18} color="#d32f2f" />
-                </ListItemIcon>
-              </MenuItem>
+              <ConfirmDialog postParam={postParam} postId={post.postId} />
             </Menu>
           </>
         )}

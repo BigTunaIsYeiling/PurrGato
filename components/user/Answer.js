@@ -18,8 +18,9 @@ import { mutate } from "swr";
 import toast from "react-hot-toast";
 import ReAsk from "./ReAsk";
 import { IoShareOutline } from "react-icons/io5";
-import { AiOutlineDelete, AiOutlineNodeExpand } from "react-icons/ai";
+import { AiOutlineNodeExpand } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import ConfirmDialog from "../Delete/DeletePost";
 export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -53,21 +54,6 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
         body: JSON.stringify({
           postId: post.postId,
         }),
-        credentials: "include",
-      }
-    );
-    const data = await response.json();
-    if (response.ok) {
-      mutate(`${process.env.NEXT_PUBLIC_API_URL}/post/${useridPosts}`);
-    } else {
-      return toast.error(data.error);
-    }
-  };
-  const DeletePost = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/post/${post.postId}`,
-      {
-        method: "DELETE",
         credentials: "include",
       }
     );
@@ -229,17 +215,7 @@ export const Answer = ({ post, avatar, username, userid, useridPosts }) => {
             )}
             {useridPosts == userid && <Divider />}
             {useridPosts == userid && (
-              <MenuItem
-                onClick={DeletePost}
-                sx={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <Typography variant="body2" color="error">
-                  Delete
-                </Typography>
-                <ListItemIcon>
-                  <AiOutlineDelete size={18} color="#d32f2f" />
-                </ListItemIcon>
-              </MenuItem>
+              <ConfirmDialog useridPosts={useridPosts} postId={post.postId} />
             )}
           </Menu>
         </Box>

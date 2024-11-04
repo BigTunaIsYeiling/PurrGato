@@ -1,20 +1,12 @@
 "use client";
-import {
-  Box,
-  Typography,
-  Paper,
-  IconButton,
-  Avatar,
-  Divider,
-  Button,
-} from "@mui/material";
-import { AiOutlineDelete } from "react-icons/ai";
+import { Box, Typography, Paper, Avatar, Divider, Button } from "@mui/material";
 import { IoMdHeart } from "react-icons/io";
 import { RiQuestionAnswerFill } from "react-icons/ri";
 import styled from "@emotion/styled";
 import { format, formatDistanceToNow } from "date-fns";
 import { useRouter } from "next/navigation";
 import { mutate } from "swr";
+import ConfirmDialog from "../Delete/DeleteNotification";
 
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.25)",
@@ -45,21 +37,6 @@ const Notification = ({ notification }) => {
       return formatDistanceToNow(createdAt, { addSuffix: true });
     } else {
       return format(createdAt, "MM/dd/yyyy");
-    }
-  };
-  const handleDelete = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/note/${notification.id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    );
-    if (response.ok) {
-      return mutate(`${process.env.NEXT_PUBLIC_API_URL}/note`);
     }
   };
   return (
@@ -151,9 +128,7 @@ const Notification = ({ notification }) => {
         >
           View
         </GlassButton>
-        <IconButton sx={{ color: "#333" }} onClick={handleDelete}>
-          <AiOutlineDelete size={20} />
-        </IconButton>
+        <ConfirmDialog id={notification.id} />
       </Box>
     </Paper>
   );

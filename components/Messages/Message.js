@@ -1,20 +1,11 @@
 "use client";
-import {
-  Box,
-  Typography,
-  Paper,
-  IconButton,
-  Avatar,
-  Divider,
-  Stack,
-} from "@mui/material";
-import { AiOutlineDelete } from "react-icons/ai";
+import { Box, Typography, Paper, Avatar, Divider, Stack } from "@mui/material";
 import anon from "@/app/anon.png";
 import Image from "next/image";
 import { format, formatDistanceToNow } from "date-fns";
-import { mutate } from "swr";
 import ReplyComponent from "./ReplyComponent";
 import ReplyOnPost from "./ReplyonPost";
+import ConfirmDialog from "../Delete/DeleteMessage";
 const Message = ({ message, date, id, post, parentPost }) => {
   const createdAt = new Date(date);
 
@@ -27,22 +18,6 @@ const Message = ({ message, date, id, post, parentPost }) => {
     } else {
       return format(createdAt, "MM/dd/yyyy");
     }
-  };
-  const DeleteMessage = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/message`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ messageId: id }),
-      credentials: "include",
-    });
-    const data = await res.json();
-    if (res.ok) {
-      mutate(`${process.env.NEXT_PUBLIC_API_URL}/message`);
-      return mutate(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
-    }
-    return console.log(data);
   };
   return (
     <Paper
@@ -106,9 +81,7 @@ const Message = ({ message, date, id, post, parentPost }) => {
         ) : (
           <ReplyOnPost content={message} id={id} parentpost={parentPost} />
         )}
-        <IconButton sx={{ color: "#555" }} onClick={DeleteMessage}>
-          <AiOutlineDelete size={20} />
-        </IconButton>
+        <ConfirmDialog messageId={id} />
       </Box>
     </Paper>
   );
