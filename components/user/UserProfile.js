@@ -29,18 +29,9 @@ const GlassButton = styled(Button)({
   marginBottom: "10px",
 });
 
-const UserProfile = ({ children, data, userid }) => {
+const UserProfile = ({ children, data, userid, userdata }) => {
   const [message, setMessage] = useState("");
   const [direction, setDirection] = useState("ltr");
-  const {
-    data: userdata,
-    error: guest,
-    isLoading: loadpage,
-  } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/user/`);
-  if (!data) {
-    return <Typography variant="h6">User not found</Typography>;
-  }
-  if (loadpage) return <LoadingScreen />;
   const SendMessageRequest = async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/message/`,
@@ -51,7 +42,7 @@ const UserProfile = ({ children, data, userid }) => {
         },
         body: JSON.stringify({
           content: message,
-          senderId: guest ? null : userdata.id,
+          senderId: !userdata ? null : userdata.id,
           receiverId: userid,
         }),
       }
@@ -77,7 +68,7 @@ const UserProfile = ({ children, data, userid }) => {
     }
   };
   return (
-    <UserLayout>
+    <UserLayout data={userdata}>
       <Box
         sx={{
           display: "flex",
@@ -162,7 +153,7 @@ const UserProfile = ({ children, data, userid }) => {
             Send
           </GlassButton>
         </Box>
-        {children}
+        {/* {children} */}
       </Box>
     </UserLayout>
   );
