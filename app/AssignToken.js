@@ -8,6 +8,8 @@ export async function setToken(token) {
   cookieStore.set("token", token, {
     httpOnly: true,
     maxAge: 30 * 24 * 60 * 60,
+    secure: true,
+    sameSite: "none",
   });
   return redirect("/");
 }
