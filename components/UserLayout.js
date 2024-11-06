@@ -2,24 +2,7 @@
 import NavBar from "@/components/user/NavBar";
 import GuestNavBar from "@/components/user/UnloggedNavBar";
 import { Box } from "@mui/material";
-import useSWR from "swr";
-import LoadingScreen from "./LoadingScreen";
-import { usePathname, useRouter } from "next/navigation";
-const UserLayout = ({ children }) => {
-  const pathname = usePathname();
-  const router = useRouter();
-  const { data, error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/`
-  );
-  if (isLoading) return <LoadingScreen />;
-  if (error) {
-    if (
-      pathname === "/" ||
-      pathname === "/notifications" ||
-      pathname === "/messages"
-    )
-      return router.push("/register");
-  }
+const UserLayout = ({ children, data }) => {
   return (
     <Box
       sx={{
@@ -29,7 +12,7 @@ const UserLayout = ({ children }) => {
         position: "relative",
       }}
     >
-      {error ? (
+      {!data ? (
         <GuestNavBar />
       ) : (
         <NavBar

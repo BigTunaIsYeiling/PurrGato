@@ -10,13 +10,13 @@ import {
 import { VscSearch } from "react-icons/vsc";
 import UserLayout from "@/components/UserLayout";
 import ListItemUser from "@/components/ListItemUser";
-export default function Home({ usersData }) {
+export default function Home({ usersData, user }) {
   const [searchTerm, setSearchTerm] = useState("");
   const filteredUsers = usersData.filter((user) =>
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
-    <UserLayout>
+    <UserLayout data={user}>
       <Box
         sx={{
           display: "flex",
