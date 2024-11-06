@@ -30,8 +30,8 @@ const UserLayout = ({ children, data }) => {
           padding: 2,
           overflowY: "auto",
           zIndex: 1,
-          marginTop: error ? "-80px" : "-100px", // Ensure this matches or slightly exceeds your NavBar height
-          paddingTop: error ? "80px" : "100px", // Adjust padding to ensure content is not hidden behind the header
+          marginTop: !data ? "-80px" : "-100px", // Ensure this matches or slightly exceeds your NavBar height
+          paddingTop: !data ? "80px" : "100px", // Adjust padding to ensure content is not hidden behind the header
         }}
       >
         {children}
