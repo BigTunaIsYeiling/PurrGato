@@ -3,43 +3,37 @@ import GetUserData from "@/lib/GetUserData";
 import { cookies } from "next/headers";
 
 export async function generateMetadata({ params }) {
-  const userid = (await params).userid;
+  const userid = params.userid;
   const cookiesStore = await cookies();
   const token = cookiesStore.get("token")?.value;
-  // Fetch user data to get the username
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`,
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     }
   );
+
+  if (!res.ok) return { title: "User Not Found" };
+
   const data = await res.json();
-
-  // If user data is not available, return a default title
-  if (!data || !data.username) {
-    return { title: "User Not Found" };
-  }
-
-  // Set the title based on the username
-  return { title: data.username };
+  return { title: data.username || "User Not Found" };
 }
 
 export default async function Layout({ params, children }) {
-  const userid = (await params).userid;
+  const userid = params.userid;
   const cookiesStore = await cookies();
   const token = cookiesStore.get("token")?.value;
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/user/one/${userid}`,
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     }
   );
+
   const userData = await GetUserData(token);
-  const data = await res.json();
+  const data = res.ok ? await res.json() : null;
   return (
     <UserProfile userid={userid} data={data} userdata={userData}>
       {children}
