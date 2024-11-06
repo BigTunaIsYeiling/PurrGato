@@ -12,8 +12,8 @@ import { FaXTwitter } from "react-icons/fa6";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { Register } from "@/app/actions";
+import { setToken } from "@/app/AssignToken";
 const GlassButton = styled(Button)({
   background: "rgba(255, 255, 255, 0.2)",
   backdropFilter: "blur(10px)",
@@ -68,24 +68,16 @@ const GlassInput = styled("input")({
 });
 
 const Signup = () => {
-  const router = useRouter();
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const handleSignup = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-      credentials: "include",
-    });
-    if (!response.ok) {
-      const data = await response.json();
-      return data.errors.forEach((error) => toast.error(error));
+    const res = await Register(username, password);
+    if (res.success) {
+      setToken(res.token);
+    } else {
+      console.log(res.errors);
     }
-    return router.push("/");
   };
 
   const handleTwitterSignup = () => {
