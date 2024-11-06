@@ -9,17 +9,10 @@ import {
 } from "@mui/material";
 import { VscSearch } from "react-icons/vsc";
 import UserLayout from "@/components/UserLayout";
-import useSWR from "swr";
-import LoadingScreen from "@/components/LoadingScreen";
 import ListItemUser from "@/components/ListItemUser";
-export default function Home() {
+export default function Home({ usersData }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/user/users`
-  );
-  if (error) return <div>Failed to load</div>;
-  if (isLoading) return <LoadingScreen />;
-  const filteredUsers = data.filter((user) =>
+  const filteredUsers = usersData.filter((user) =>
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
