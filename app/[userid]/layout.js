@@ -3,7 +3,7 @@ import GetUserData from "@/lib/GetUserData";
 import { cookies } from "next/headers";
 
 export async function generateMetadata({ params }) {
-  const userid = params.userid;
+  const userid = (await params).userid;
   const cookiesStore = await cookies();
   const token = cookiesStore.get("token")?.value;
 
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Layout({ params, children }) {
-  const userid = params.userid;
+  const userid = (await params).userid;
   const cookiesStore = await cookies();
   const token = cookiesStore.get("token")?.value;
 
